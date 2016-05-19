@@ -21,8 +21,8 @@ Usuario json
 |]
 
 mkYesod "Pagina" [parseRoutes|
-
 /cadastro/usuario UsuarioR GET POST
+/consulta/usuario/#UsuarioId UsuarioChecaR GET
 --/cadastro/pessoa GET POST
 |]
 
@@ -46,19 +46,14 @@ postUsuarioR = do
     runDB $ insert usuario
     sendResponse (object [pack "resp" .= pack "Criado"])
 
+getUsuarioChecaR :: UsuarioId -> Handler Html
+getUsuarioChecaR pid = do
+    usuario <- runDB $ get404 pid
+    defaultLayout [whamlet|
+        <p><b> #{usuarioNome usuario}  
+        <p><b> #{usuarioSenha usuario}
 
-{- data HelloWorld = HelloWorld
-
-mkYesod "HelloWorld" [parseRoutes|
-/ HomeR GET
-|]
-
-instance Yesod HelloWorld
-
-getHomeR :: Handler Html
-getHomeR = defaultLayout [whamlet|Hello World!|] -}
-
-
+    |]
 
 connStr = "dbname=d4htbg71jrvj1f host=ec2-107-20-174-127.compute-1.amazonaws.com user=kcepfkqlcfbgpx password=ypVq9Yx6t4Q1InDMvoT-yR7Idk port=5432"
 
