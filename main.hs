@@ -3,8 +3,8 @@
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeFamilies          #-}
 import Yesod
-import Database.Persist.Postgresql
 import Data.Text
+import Database.Persist.Postgresql
 import Control.Monad.Logger(runStdoutLoggingT)
 
 data Pagina = Pagina{connPool :: ConnectionPool}
@@ -31,14 +31,30 @@ Pessoa json
     nomemae Text
     deriving Show
     
+Medicamento json
+
+    nome Text
+    dosagem Text
+    deriving Show
+
+Ficha json
+    alergia Text
+    doador Text
+    peso Text
+    altura Text
+--    pessoa PessoaId
+    deriving Show
+
 |]
 
 
 mkYesod "Pagina" [parseRoutes|
 /cadastro/usuario UsuarioR GET POST
 /cadastro/pessoa PessoaR GET POST
+/cadastro/ficha FichaR GET POST
 /consulta/usuario/#UsuarioId UsuarioChecaR GET
 /consulta/pessoa/#PessoaId PessoaChecaR GET
+/consulta/ficha/#FichaId FichaChecaR GET
 |]
 
 instance YesodPersist Pagina where
@@ -97,6 +113,32 @@ getPessoaChecaR pid = do
         <p><b> #{pessoaNomepai pessoa}
         <p><b> #{pessoaNomemae pessoa}
     |]
+
+
+
+getFichaR :: Handler ()
+getFichaR = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    allFicha <- runDB $ selectList [] [Asc FichaAlergia ]
+    sendResponse (object [pack "data" .= fmap toJSON allFicha])
+
+postFichaR :: Handler ()
+postFichaR = do
+    ficha <- requireJsonBody :: Handler Ficha
+    runDB $ insert ficha
+    sendResponse (object [pack "resp" .= pack "Criado"])
+
+getFichaChecaR :: FichaId -> Handler Html
+getFichaChecaR pid = do
+    ficha <- runDB $ get404 pid
+    defaultLayout [whamlet|
+        <p><b> #{fichaAlergia ficha}
+        <p><b> #{fichaDoador ficha}
+        <p><b> #{fichaPeso ficha}
+        <p><b> #{fichaAltura ficha}
+    |]
+ --       <p><b> #{fichaPessoa ficha }
+
 
 
 connStr = "dbname=d4htbg71jrvj1f host=ec2-107-20-174-127.compute-1.amazonaws.com user=kcepfkqlcfbgpx password=ypVq9Yx6t4Q1InDMvoT-yR7Idk port=5432"
