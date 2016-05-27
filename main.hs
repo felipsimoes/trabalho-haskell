@@ -52,9 +52,11 @@ mkYesod "Pagina" [parseRoutes|
 /cadastro/usuario UsuarioR GET POST
 /cadastro/pessoa PessoaR GET POST
 /cadastro/ficha FichaR GET POST
+/cadastro/medicamento MedicamentoR GET POST
 /consulta/usuario/#UsuarioId UsuarioChecaR GET
 /consulta/pessoa/#PessoaId PessoaChecaR GET
 /consulta/ficha/#FichaId FichaChecaR GET
+/consulta/medicamento/#MedicamentoId MedicamentoChecaR GET
 |]
 
 instance YesodPersist Pagina where
@@ -138,6 +140,27 @@ getFichaChecaR pid = do
         <p><b> #{fichaAltura ficha}
     |]
  --       <p><b> #{fichaPessoa ficha }
+
+getMedicamentoR :: Handler ()
+getMedicamentoR = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    allMedicamento <- runDB $ selectList [] [Asc MedicamentoNome ]
+    sendResponse (object [pack "data" .= fmap toJSON allMedicamento])
+
+postMedicamentoR :: Handler ()
+postMedicamentoR = do
+    medicamento <- requireJsonBody :: Handler Medicamento
+    runDB $ insert medicamento
+    sendResponse (object [pack "resp" .= pack "Criado"])
+
+getMedicamentoChecaR :: MedicamentoId -> Handler Html
+getMedicamentoChecaR pid = do
+    medicamento <- runDB $ get404 pid
+    defaultLayout [whamlet|
+        <p><b> #{medicamentoNome medicamento}
+        <p><b> #{medicamentoDosagem medicamento}    
+        
+    |]
 
 
 
