@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "webapp/template-blank-ad-project/sample.zip",
       "projectGuid": "b6b0e728-224a-44ff-b820-f719b6a20487",
-      "lastModifiedDate": 1463512300019,
+      "lastModifiedDate": 1464474403732,
       "creationDate": 1463448058902
     },
     "XDK-app-designer": "true",
@@ -217,16 +217,18 @@
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "21",
           "android-installLocation": "auto",
-          "android-signed": true
+          "android-signed": true,
+          "Fullscreen": false
         },
         "isActive_": true,
-        "appName_": "PrjLogin",
+        "appName_": "Aplicativo",
         "appID_": "xdk.intel.blank.ad.template.crosswalk",
         "appAccess_": {
-          "mode": "legacy",
+          "mode": "on",
           "network": [],
           "intents": [],
-          "navigation": []
+          "navigation": [],
+          "properties": {}
         },
         "icons_": [],
         "splashes_": [],
