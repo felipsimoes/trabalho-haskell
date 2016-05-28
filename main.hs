@@ -14,7 +14,7 @@ instance Yesod Pagina
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 
 Usuario json
-    nome Text
+    email Text
     senha Text
     deriving Show
 
@@ -29,21 +29,27 @@ Pessoa json
     cidade Text
     nomepai Text
     nomemae Text
-    deriving Show
-    
-Medicamento json
-
-    nome Text
-    dosagem Text
+    uid UsuarioId
     deriving Show
 
 Ficha json
     alergia Text
     doador Text
-    peso Text
-    altura Text
---    pessoa PessoaId
+    peso Double
+    altura Double
+    pid PessoaId
     deriving Show
+    
+Medicamento json
+    nome Text
+    dosagem Text
+    deriving Show
+
+PessoaMedicamentos json
+    pid PessoaId
+    mid MedicamentoId
+    UniquePessoaMedicamentos pid mid
+
 
 |]
 
@@ -66,12 +72,11 @@ instance YesodPersist Pagina where
         let pool = connPool master
         runSqlPool f pool
         
---FUNÇOES
 
 getUsuarioR :: Handler ()
 getUsuarioR = do
     addHeader "Access-Control-Allow-Origin" "*"
-    allUsuario <- runDB $ selectList [] [Asc UsuarioNome ]
+    allUsuario <- runDB $ selectList [] [Asc UsuarioId ]
     sendResponse (object [pack "data" .= fmap toJSON allUsuario])
 
 postUsuarioR :: Handler ()
@@ -84,7 +89,7 @@ getUsuarioChecaR :: UsuarioId -> Handler Html
 getUsuarioChecaR pid = do
     usuario <- runDB $ get404 pid
     defaultLayout [whamlet|
-        <p><b> #{usuarioNome usuario}  
+        <p><b> #{usuarioEmail usuario}  
         <p><b> #{usuarioSenha usuario}
     |]
 
