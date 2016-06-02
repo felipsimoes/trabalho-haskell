@@ -59,8 +59,8 @@ mkYesod "Pagina" [parseRoutes|
 /cadastro/pessoa PessoaR GET POST
 /cadastro/ficha FichaR GET POST
 /cadastro/medicamento MedicamentoR GET POST
-/consulta/usuario/#UsuarioId UsuarioChecaR GET
-/consulta/pessoa/#PessoaId PessoaChecaR GET
+/consulta/usuario/#UsuarioId UsuarioChecaR GET PUT DELETE
+/consulta/pessoa/#PessoaId PessoaChecaR GET PUT DELETE
 /consulta/ficha/#FichaId FichaChecaR GET
 /consulta/medicamento/#MedicamentoId MedicamentoChecaR GET
 |]
@@ -81,6 +81,7 @@ getUsuarioR = do
 
 postUsuarioR :: Handler ()
 postUsuarioR = do
+    addHeader "Access-Control-Allow-Origin" "*"
     usuario <- requireJsonBody :: Handler Usuario
     runDB $ insert usuario
     sendResponse (object [pack "resp" .= pack "Criado"])
@@ -92,6 +93,19 @@ getUsuarioChecaR pid = do
         <p><b> #{usuarioEmail usuario}  
         <p><b> #{usuarioSenha usuario}
     |]
+
+
+putUsuarioChecaR :: UsuarioId -> Handler ()
+putUsuarioChecaR uid = do
+    usuario <- requireJsonBody :: Handler Usuario 
+    runDB $ update uid [UsuarioSenha =. usuarioSenha usuario]
+    sendResponse (object [pack "resp" .= pack "Alterado"])
+
+deleteUsuarioChecaR :: UsuarioId -> Handler ()
+deleteUsuarioChecaR uid = do
+    runDB $ delete uid
+    sendResponse (object [pack "resp" .= pack "Excluido"])
+
 
 getPessoaR :: Handler ()
 getPessoaR = do
@@ -121,8 +135,26 @@ getPessoaChecaR pid = do
         <p><b> #{pessoaNomemae pessoa}
     |]
 
-
-
+deletePessoaChecaR :: PessoaId -> Handler ()
+deletePessoaChecaR pid = do
+    runDB $ delete pid
+    sendResponse (object [pack "resp" .= pack "Excluido"])
+    
+putPessoaChecaR :: PessoaId -> Handler ()
+putPessoaChecaR pid = do
+    pessoa <- requireJsonBody :: Handler Pessoa 
+    runDB $ update pid [PessoaNome =. pessoaNome pessoa, 
+                        PessoaCpf =. pessoaCpf pessoa,
+                        PessoaSexo =. pessoaSexo pessoa,
+                        PessoaTelefone =. pessoaTelefone pessoa,
+                        PessoaDtnascimento =. pessoaDtnascimento pessoa,
+                        PessoaCep =. pessoaCep pessoa,
+                        PessoaEndereco =. pessoaEndereco pessoa,
+                        PessoaCidade =. pessoaCidade pessoa,
+                        PessoaNomepai =. pessoaNomepai pessoa,
+                        PessoaNomemae =. pessoaNomemae pessoa]
+    sendResponse (object [pack "resp" .= pack "Alterado"])
+    
 getFichaR :: Handler ()
 getFichaR = do
     addHeader "Access-Control-Allow-Origin" "*"
@@ -144,7 +176,28 @@ getFichaChecaR pid = do
         <p><b> #{fichaPeso ficha}
         <p><b> #{fichaAltura ficha}
     |]
- --       <p><b> #{fichaPessoa ficha }
+
+deleteFichaChecaR :: FichaId -> Handler ()
+deleteFichaChecaR pid = do
+    runDB $ delete pid
+    sendResponse (object [pack "resp" .= pack "Excluido"])
+    
+putFichaChecaR :: PessoaId -> Handler ()
+putFichaChecaR pid = do
+    pessoa <- requireJsonBody :: Handler Pessoa 
+    runDB $ update pid [PessoaNome =. pessoaNome pessoa, 
+                        PessoaCpf =. pessoaCpf pessoa,
+                        PessoaSexo =. pessoaSexo pessoa,
+                        PessoaTelefone =. pessoaTelefone pessoa,
+                        PessoaDtnascimento =. pessoaDtnascimento pessoa,
+                        PessoaCep =. pessoaCep pessoa,
+                        PessoaEndereco =. pessoaEndereco pessoa,
+                        PessoaCidade =. pessoaCidade pessoa,
+                        PessoaNomepai =. pessoaNomepai pessoa,
+                        PessoaNomemae =. pessoaNomemae pessoa]
+    sendResponse (object [pack "resp" .= pack "Alterado"])
+
+
 
 getMedicamentoR :: Handler ()
 getMedicamentoR = do
