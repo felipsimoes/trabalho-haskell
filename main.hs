@@ -61,7 +61,7 @@ mkYesod "Pagina" [parseRoutes|
 /cadastro/medicamento MedicamentoR GET POST
 /consulta/usuario/#UsuarioId UsuarioChecaR GET PUT DELETE
 /consulta/pessoa/#PessoaId PessoaChecaR GET PUT DELETE
-/consulta/ficha/#FichaId FichaChecaR GET
+/consulta/ficha/#FichaId FichaChecaR GET PUT DELETE
 /consulta/medicamento/#MedicamentoId MedicamentoChecaR GET
 |]
 
@@ -178,23 +178,17 @@ getFichaChecaR pid = do
     |]
 
 deleteFichaChecaR :: FichaId -> Handler ()
-deleteFichaChecaR pid = do
-    runDB $ delete pid
+deleteFichaChecaR fid = do
+    runDB $ delete fid
     sendResponse (object [pack "resp" .= pack "Excluido"])
     
-putFichaChecaR :: PessoaId -> Handler ()
-putFichaChecaR pid = do
-    pessoa <- requireJsonBody :: Handler Pessoa 
-    runDB $ update pid [PessoaNome =. pessoaNome pessoa, 
-                        PessoaCpf =. pessoaCpf pessoa,
-                        PessoaSexo =. pessoaSexo pessoa,
-                        PessoaTelefone =. pessoaTelefone pessoa,
-                        PessoaDtnascimento =. pessoaDtnascimento pessoa,
-                        PessoaCep =. pessoaCep pessoa,
-                        PessoaEndereco =. pessoaEndereco pessoa,
-                        PessoaCidade =. pessoaCidade pessoa,
-                        PessoaNomepai =. pessoaNomepai pessoa,
-                        PessoaNomemae =. pessoaNomemae pessoa]
+putFichaChecaR :: FichaId -> Handler ()
+putFichaChecaR fid = do
+    ficha <- requireJsonBody :: Handler Ficha
+    runDB $ update fid [FichaAlergia =. fichaAlergia ficha,
+                        FichaDoador =. fichaDoador ficha,
+                        FichaPeso =. fichaPeso ficha,
+                        FichaAltura =. fichaAltura ficha]
     sendResponse (object [pack "resp" .= pack "Alterado"])
 
 
