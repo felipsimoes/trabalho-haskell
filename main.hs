@@ -59,10 +59,11 @@ mkYesod "Pagina" [parseRoutes|
 /cadastro/pessoa PessoaR GET POST
 /cadastro/ficha FichaR GET POST
 /cadastro/medicamento MedicamentoR GET POST
+
 /consulta/usuario/#UsuarioId UsuarioChecaR GET PUT DELETE
 /consulta/pessoa/#PessoaId PessoaChecaR GET PUT DELETE
 /consulta/ficha/#FichaId FichaChecaR GET PUT DELETE
-/consulta/medicamento/#MedicamentoId MedicamentoChecaR GET
+/consulta/medicamento/#MedicamentoId MedicamentoChecaR GET PUT DELETE
 |]
 
 instance YesodPersist Pagina where
@@ -211,8 +212,19 @@ getMedicamentoChecaR pid = do
     defaultLayout [whamlet|
         <p><b> #{medicamentoNome medicamento}
         <p><b> #{medicamentoDosagem medicamento}    
-        
     |]
+    
+deleteMedicamentoChecaR :: MedicamentoId -> Handler ()
+deleteMedicamentoChecaR mid = do
+    runDB $ delete mid
+    sendResponse (object [pack "resp" .= pack "Excluido"])
+    
+putMedicamentoChecaR :: MedicamentoId -> Handler ()
+putMedicamentoChecaR mid = do
+    medicamento <- requireJsonBody :: Handler Medicamento
+    runDB $ update mid [MedicamentoNome =. medicamentoNome medicamento,
+                        MedicamentoDosagem =. medicamentoDosagem medicamento]
+    sendResponse (object [pack "resp" .= pack "Alterado"])
 
 
 
