@@ -137,6 +137,7 @@
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
                 <div class="upage-content ac0 content-area vertical-col left" id="page_79_36">
+                    <div class="alert no_wrap widget uib_w_48 d-margins alert-info alerta" data-uib="twitter%20bootstrap/alert" data-ver="1" id="mensagemPostUsuario"></div>
                     <div class="grid grid-pad urow uib_row_6 row-height-6" data-uib="layout/row" data-ver="0">
                         <div class="col uib_col_14 col-0_12-12" data-uib="layout/col" data-ver="0">
                             <div class="widget-container content-area vertical-col center">
@@ -158,20 +159,23 @@
                                 <div class="well no_wrap  widget uib_w_15 d-margins" data-uib="twitter%20bootstrap/well" data-ver="1">
                                     <div class="col uib_col_16 single-col" data-uib="layout/col" data-ver="0">
                                         <div class="widget-container content-area vertical-col">
-                                            <div class="table-thing widget uib_w_9 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                                <label class="narrow-control"></label>
-                                                <input class="wide-control form-control default" type="text" placeholder="Email">
-                                            </div>
-                                            <div class="table-thing widget uib_w_10 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                                <label class="narrow-control"></label>
-                                                <input class="wide-control form-control default" type="password" placeholder="Digite uma senha">
-                                            </div>
-                                            <div class="table-thing widget uib_w_11 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                                <label class="narrow-control"></label>
-                                                <input class="wide-control form-control default" type="password" placeholder="Digite novamente a senha">
-                                            </div>
-                                            <button class="btn widget uib_w_16 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1">Cadastrar</button>
-                                            <button class="btn widget uib_w_19 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1">Limpar</button><span class="uib_shim"></span>
+                                            <form method="POST" name="formPostUsuario" class="form-inline" id="formPostUsuario" action="#">
+
+                                                <div class="table-thing widget uib_w_9 d-margins form-group" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                    <label for="email" class="narrow-control"></label>
+                                                    <input class="wide-control form-control default" type="text" placeholder="Email" name="email">
+                                                </div>
+                                                <div class="table-thing widget uib_w_10 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                    <label for="senha" class="narrow-control"></label>
+                                                    <input class="wide-control form-control default" type="password" placeholder="Digite uma senha" name="senha">
+                                                </div>
+                                                <div class="table-thing widget uib_w_11 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                    <label for="senhaNovamente" class="narrow-control"></label>
+                                                    <input class="wide-control form-control default" type="password" placeholder="Digite novamente a senha" name="senhaNovamente">
+                                                </div>
+                                                <button class="btn widget uib_w_16 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn-cadastrar">Cadastrar</button>
+                                                <button class="btn widget uib_w_19 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1">Limpar</button><span class="uib_shim"></span>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +240,7 @@
                                     <div class="widget-container left-receptacle"></div>
                                     <div class="widget-container right-receptacle"></div>
                                     <div class="text-container">
-                                        <h2>Dados pesoais</h2>
+                                        <h2>Dados pessoais</h2>
                                     </div>
                                 </div>
                                 <span class="uib_shim"></span>

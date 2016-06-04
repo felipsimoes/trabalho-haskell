@@ -21,5 +21,112 @@
 // // ...event handler code here...
 // }
 
+var dados;
 
-// ...additional event handlers here...
+function getFormData($form){
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+
+function botaoPostUsuario(){
+    var $form = $("form[name='formPostUsuario']");
+    dados = getFormData($form);
+
+    $.ajax( {
+        type: 'post',
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
+        success:function(data) {
+            $("#mensagemPostUsuario").addClass("alert-success");
+            $("#mensagemPostUsuario").text("Usuário cadastrado com sucesso!");
+            $("#mensagemPostUsuario").css("display","block");
+        },
+        error:function(data) {
+            $("#mensagemPostUsuario").addClass("alert-danger");
+            $("#mensagemPostUsuario").text("Ocorreu um erro durante o cadastro!");
+            $("#mensagemPostUsuario").css("display","block");
+        }
+    });
+}
+function botaoPostPessoa(){
+    var $form = $("form[name='formPostPessoa']");
+    dados = getFormData($form);
+
+    $.ajax( {
+        type: 'post',
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
+        success:function(data) {
+          $("#mensagem").css("display","block");
+        }
+    });
+}
+function botaoPostFicha(){
+    var $form = $("form[name='formPostFicha']");
+    dados = getFormData($form);
+
+    $.ajax( {
+        type: 'post',
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
+        success:function(data) {
+          $("#mensagem").css("display","block");
+        }
+    });
+}
+function botaoPostMedicamento(){
+    var $form = $("form[name='formPostMedicamento']");
+    dados = getFormData($form);
+
+    $.ajax( {
+        type: 'post',
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
+        success:function(data) {
+            
+        }
+    });
+}
+
+function tratarAlerta(alerta){
+    alerta.removeClass("alert-info");
+    alerta.removeClass("alert-success"); 
+    alerta.removeClass("alert-danger"); 
+    alerta.removeClass("alert-info"); 
+    alerta.text("");
+}
+
+function validarFormPostUsuario(){
+    var email = document.forms.formPostUsuario.email.value.trim();
+    var senha = document.forms.formPostUsuario.senha.value.trim();
+    var senhaNovamente = document.forms.formPostUsuario.senhaNovamente.value.trim();
+    var alerta = $("#mensagemPostUsuario");
+    
+    if(email === null || email === ""){
+        alerta.text("Preencha com o email.");
+    }
+    else if(senha === null || senha === ""){
+        alerta.text("Preencha com uma senha.");
+    }
+    else if(senha != senhaNovamente){
+        alerta.text("Senhas não são iguais.");
+    }
+    else {
+        return;
+    }
+    alerta.addClass("alert-info");
+    alerta.css("display","block");
+    return false;
+}
+
+

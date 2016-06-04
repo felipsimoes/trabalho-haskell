@@ -1994,3 +1994,8 @@ label:empty {
     min-height: 100px;
   }
 }
+@media all {
+  .alerta {
+    display: none;
+  }
+}
