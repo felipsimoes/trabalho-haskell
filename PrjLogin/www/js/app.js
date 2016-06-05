@@ -83,19 +83,25 @@ function botaoPostFicha(){
         }
     });
 }
+
 function botaoPostMedicamento(){
     var $form = $("form[name='formPostMedicamento']");
     dados = getFormData($form);
-
-    $.ajax( {
+        
+    return $.ajax( {
         type: 'post',
+        async: false,
         data: JSON.stringify(dados),
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
-        success:function(data) {
-            
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/medicamento',
+        success:function(data){
+            console.log(data);
+        },
+        error:function(data){
+            console.log(data);
         }
     });
+    
 }
 
 function tratarAlerta(alerta){
@@ -122,7 +128,7 @@ function validarFormPostUsuario(){
         alerta.text("Senhas não são iguais.");
     }
     else {
-        return;
+        return true;
     }
     alerta.addClass("alert-info");
     alerta.css("display","block");

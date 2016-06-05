@@ -38,9 +38,11 @@
         /* button  Cadastrar */
     $(document).on("click", ".uib_w_16", function(evt)
     {   
-        validarFormPostUsuario();
-        botaoPostUsuario();
+        if(validarFormPostUsuario()==true){
+            botaoPostUsuario();    
+        }
         return false;
+                
     });
     
         /* button  Limpar */
@@ -66,6 +68,29 @@
     {
          /*global activate_page */
          activate_page("#mainpage"); 
+         return false;
+    });
+    
+        /* button  #enviar_medicamento */
+    $(document).on("click", "#enviar_medicamento", function(evt)
+    {
+         var medData; 
+         botaoPostMedicamento().done(function(data){
+            if(data.resp === "Criado"){
+               activate_page("#menu");
+            }else{
+              alert("Erro");
+            } 
+         });
+         return false;
+         
+    });
+    
+        /* button  Esqueceu a senha? */
+    $(document).on("click", ".uib_w_5", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#cadastro_medicamento"); 
          return false;
     });
     
