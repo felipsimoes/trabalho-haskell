@@ -16,6 +16,7 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 Usuario json
     email Text
     senha Text
+    UniqueUsuario email
     deriving Show
 
 Pessoa json
@@ -50,11 +51,11 @@ PessoaMedicamentos json
     mid MedicamentoId
     UniquePessoaMedicamentos pid mid
 
-
 |]
 
 
 mkYesod "Pagina" [parseRoutes|
+
 /cadastro/usuario UsuarioR GET POST
 /cadastro/pessoa PessoaR GET POST
 /cadastro/ficha FichaR GET POST
@@ -64,6 +65,7 @@ mkYesod "Pagina" [parseRoutes|
 /consulta/pessoa/#PessoaId PessoaChecaR GET PUT DELETE
 /consulta/ficha/#FichaId FichaChecaR GET PUT DELETE
 /consulta/medicamento/#MedicamentoId MedicamentoChecaR GET PUT DELETE
+
 |]
 
 instance YesodPersist Pagina where
@@ -73,7 +75,6 @@ instance YesodPersist Pagina where
         let pool = connPool master
         runSqlPool f pool
         
-
 getUsuarioR :: Handler ()
 getUsuarioR = do
     addHeader "Access-Control-Allow-Origin" "*"
@@ -202,6 +203,7 @@ getMedicamentoR = do
 
 postMedicamentoR :: Handler ()
 postMedicamentoR = do
+    addHeader "Access-Control-Allow-Origin" "*"
     medicamento <- requireJsonBody :: Handler Medicamento
     runDB $ insert medicamento
     sendResponse (object [pack "resp" .= pack "Criado"])
@@ -227,13 +229,14 @@ putMedicamentoChecaR mid = do
     sendResponse (object [pack "resp" .= pack "Alterado"])
 
 
-
 connStr = "dbname=d4htbg71jrvj1f host=ec2-107-20-174-127.compute-1.amazonaws.com user=kcepfkqlcfbgpx password=ypVq9Yx6t4Q1InDMvoT-yR7Idk port=5432"
 
 main :: IO ()
 main = runStdoutLoggingT $ withPostgresqlPool connStr 10 $ \pool -> liftIO $ do
 runSqlPersistMPool (runMigration migrateAll) pool
 warp 8080 (Pagina pool)
+
+
 
 
 
