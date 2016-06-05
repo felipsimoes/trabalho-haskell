@@ -22,7 +22,8 @@
 // }
 
 var dados;
-var sessao_usuario_id == 3; //null quando entrar no app
+var sessao_usuario_id = 3; //null quando entrar no app
+var sessao_pessoa_id = 2; //decidir melhor forma de capturar esse id
 
 function getFormData($form){
     var unindexed_array = $form.serializeArray();
@@ -78,14 +79,23 @@ function botaoPostPessoa(){
 function botaoPostFicha(){
     var $form = $("form[name='formPostFicha']");
     dados = getFormData($form);
-
-    $.ajax( {
+    //dados["uid"] = sessao_usuario_id; //usuario felipe
+    dados.peso = parseFloat(dados.peso.replace(",","."));
+    dados.altura = parseFloat(dados.altura.replace(",","."));
+    
+    dados["pid"] = sessao_pessoa_id;
+    
+    return $.ajax( {
         type: 'post',
+        async: false,
         data: JSON.stringify(dados),
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
-        success:function(data) {
-          $("#mensagem").css("display","block");
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/ficha',
+        success:function(data){
+            console.log(data);
+        },
+        error:function(data){
+            console.log(data);
         }
     });
 }

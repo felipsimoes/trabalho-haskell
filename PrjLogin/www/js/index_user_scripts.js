@@ -7,30 +7,14 @@
  */
  function register_event_handlers()
  {
-    
-    
-     /* button  Entrar */
-    
-    
-        /* button  Button */
-    
-    
-        /* button  .uib_w_18 */
-    
-    
-        /* button  Entrar */
-    
-    
+        
         /* button  Registrar */
     $(document).on("click", ".uib_w_14", function(evt)
     {
          /*global activate_page */
          activate_page("#cadastro_usuario"); 
     });
-    
-        /* button  Entrar */
-    
-    
+
         /* button  Cadastrar */
     $(document).on("click", ".uib_w_16", function(evt)
     {   
@@ -81,8 +65,6 @@
          
     });
     
-        /* button  Esqueceu a senha? */
-    
     
         /* button  Esqueceu a senha? */
     $(document).on("click", ".uib_w_5", function(evt)
@@ -131,7 +113,7 @@
          activate_page("#menu"); 
          return false;
     });
-    
+        
         /* button  #salvar_dados_pessoa */
     $(document).on("click", "#salvar_dados_pessoa", function(evt)
     {
@@ -141,8 +123,21 @@
             }else{
               alert("Erro");
             } 
-         });
-         return false;
+        });
+        return false;
+    });
+    
+        /* button  #salvar_dados_ficha */
+    $(document).on("click", "#salvar_dados_ficha", function(evt)
+    {
+        botaoPostFicha().done(function(data){
+            if(data.resp === "Criado"){
+               activate_page("#menu");
+            }else{
+              alert("Erro");
+            } 
+        });
+        return false;
     });
     
     }
