@@ -16,11 +16,7 @@
     
     
         /* button  .uib_w_18 */
-    $(document).on("click", ".uib_w_18", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#mainpage"); 
-    });
+    
     
         /* button  Entrar */
     
@@ -74,7 +70,6 @@
         /* button  #enviar_medicamento */
     $(document).on("click", "#enviar_medicamento", function(evt)
     {
-         var medData; 
          botaoPostMedicamento().done(function(data){
             if(data.resp === "Criado"){
                activate_page("#menu");
@@ -87,10 +82,66 @@
     });
     
         /* button  Esqueceu a senha? */
+    
+    
+        /* button  Esqueceu a senha? */
     $(document).on("click", ".uib_w_5", function(evt)
     {
          /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  #menu_mostrar_ficha_medica */
+    $(document).on("click", "#menu_mostrar_ficha_medica", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#cadastro_pessoa"); 
+         return false;
+    });
+    
+        /* button  #menu_cadastrar_medicamento */
+    $(document).on("click", "#menu_cadastrar_medicamento", function(evt)
+    {
+         /*global activate_page */
          activate_page("#cadastro_medicamento"); 
+         return false;
+    });
+    
+        /* button  #menu_cadastrar_pessoa */
+    $(document).on("click", "#menu_cadastrar_pessoa", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#cadastro_pessoa"); 
+         return false;
+    });
+    
+        /* button  #menu_cadastrar_ficha */
+    $(document).on("click", "#menu_cadastrar_ficha", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#cadastro_ficha"); 
+         return false;
+    });
+    
+        /* button  Voltar */
+    $(document).on("click", ".uib_w_18", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  #salvar_dados_pessoa */
+    $(document).on("click", "#salvar_dados_pessoa", function(evt)
+    {
+        botaoPostPessoa().done(function(data){
+            if(data.resp === "Criado"){
+               activate_page("#menu");
+            }else{
+              alert("Erro");
+            } 
+         });
          return false;
     });
     
