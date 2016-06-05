@@ -33,11 +33,7 @@
     });
     
         /* button  Entrar */
-    $(document).on("click", ".uib_w_4", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#cadastro_pessoa"); 
-    });
+    
     
         /* button  Cadastrar */
     $(document).on("click", ".uib_w_16", function(evt)
@@ -55,6 +51,22 @@
         $("#formPostUsuario input[name=senhaNovamente]").val(''); 
         $("#mensagemPostUsuario").css("display","none");
         return false;
+    });
+    
+        /* button  Entrar */
+    $(document).on("click", ".uib_w_4", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  Voltar */
+    $(document).on("click", ".uib_w_60", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mainpage"); 
+         return false;
     });
     
     }

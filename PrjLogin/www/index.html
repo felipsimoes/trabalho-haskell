@@ -5,6 +5,7 @@
   -->
 
     <head>
+        <link rel="stylesheet" type="text/css" href="media_button_bar/css/media_button_bar.css">
         <link rel="stylesheet" type="text/css" href="cerulean/css/cerulean.min.css" class="uib-framework-theme">
         <meta charset="UTF-8">
         <title>Blank App Designer Packaged Web App Project Template</title>
@@ -66,6 +67,11 @@
         <script type="application/javascript" src="xdk/ad/bs_subpage.js"></script>
         <script type="application/javascript" src="marginal/marginal-position.min.js"></script>
         <script type="application/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <script type="application/javascript" src="xdk/appdesigner/js/rest-of-space.js"></script>
+        <script type="application/javascript" src="sidebar/js/hammer.js"></script>
+        <script type="application/javascript" src="sidebar/js/jquery.hammer.js"></script>
+        <script type="application/javascript" src="sidebar/js/swipe-hammer.js"></script>
+        <script type="application/javascript" src="sidebar/js/sidebar.js"></script>
     </head>
 
     <body>
@@ -132,7 +138,7 @@
                     <h2></h2>
                     <div class="widget-container wrapping-col single-centered"></div>
                     <div class="widget-container content-area horiz-area wrapping-col left">
-                        <button class="btn widget uib_w_18 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-chevron-left button-icon-left" data-position="left"></i>Voltar</button>
+                        <button class="btn widget uib_w_18 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1">Voltar</button>
                     </div>
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
@@ -188,49 +194,65 @@
             </div>
 
         </div>
-        <div class="upage vertical-col left hidden" id="cadastro_medicamento">
-            <div class="grid grid-pad urow uib_row_8 row-height-8" data-uib="layout/row" data-ver="0">
-                <div class="col uib_col_17 col-0_12-12" data-uib="layout/col" data-ver="0">
-                    <div class="widget-container content-area center-h-v-col">
-                        <div class="tarea widget uib_w_25 d-margins" data-uib="media/text" data-ver="0" name="uib_w_25">
-                            <div class="widget-container left-receptacle"></div>
-                            <div class="widget-container right-receptacle"></div>
-                            <div class="text-container">
-                                <h2>Medicamento</h2>
-                            </div>
-                        </div><span class="uib_shim"></span>
-                    </div>
+        <div class="upage hidden" id="cadastro_medicamento">
+            <div class="upage-outer">
+                <div class="uib-header header-bg container-group inner-element uib_w_49" data-uib="layout/header" data-ver="0">
+                    <h2></h2>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
-                <span class="uib_shim"></span>
-            </div>
-
-            <div class="grid grid-pad urow uib_row_9 row-height-9" data-uib="layout/row" data-ver="0">
-                <div class="col uib_col_18 col-0_12-12" data-uib="layout/col" data-ver="0">
-                    <div class="widget-container content-area vertical-col">
-                        <div class="well no_wrap  widget uib_w_21 d-margins" data-uib="twitter%20bootstrap/well" data-ver="1">
-                            <div class="col uib_col_19 single-col" data-uib="layout/col" data-ver="0">
-                                <div class="widget-container content-area vertical-col">
-                                    <div class="table-thing widget uib_w_24 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="text" placeholder="Nome" name="nome">
+                <div class="upage-content ac0 content-area vertical-col left">
+                    <div class="grid grid-pad urow uib_row_8 row-height-8" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_17 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area center-h-v-col">
+                                <div class="tarea widget uib_w_25 d-margins" data-uib="media/text" data-ver="0" name="uib_w_25">
+                                    <div class="widget-container left-receptacle"></div>
+                                    <div class="widget-container right-receptacle"></div>
+                                    <div class="text-container">
+                                        <h2>Medicamento</h2>
                                     </div>
-                                    <div class="table-thing widget uib_w_23 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="text" placeholder="Dosagem" name="valor">
+                                </div><span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                    <div class="grid grid-pad urow uib_row_9 row-height-9" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_18 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+                                <div class="well no_wrap  widget uib_w_21 d-margins" data-uib="twitter%20bootstrap/well" data-ver="1">
+                                    <div class="col uib_col_19 single-col" data-uib="layout/col" data-ver="0">
+                                        <div class="widget-container content-area vertical-col">
+                                            <div class="table-thing widget uib_w_24 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                <label class="narrow-control"></label>
+                                                <input class="wide-control form-control default" type="text" placeholder="Nome" name="nome">
+                                            </div>
+                                            <div class="table-thing widget uib_w_23 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                <label class="narrow-control"></label>
+                                                <input class="wide-control form-control default" type="text" placeholder="Dosagem" name="valor">
+                                            </div>
+                                            <button class="btn widget uib_w_22 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="enviar_medicamento">Enviar</button>
+                                            <span class="uib_shim"></span>
+                                        </div>
                                     </div>
-                                    <button class="btn widget uib_w_22 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="enviar_medicamento">Enviar</button>
-                                    <span class="uib_shim"></span>
                                 </div>
+                                <span class="uib_shim"></span>
                             </div>
                         </div>
                         <span class="uib_shim"></span>
                     </div>
                 </div>
-                <span class="uib_shim"></span>
             </div>
+
         </div>
         <div class="upage hidden" id="cadastro_pessoa">
             <div class="upage-outer">
+                <div class="uib-header header-bg container-group inner-element uib_w_50" data-uib="layout/header" data-ver="0">
+                    <h2></h2>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
 
                 <div class="upage-content ac0 content-area vertical-col left" id="page_19_57">
                     <div class="grid grid-pad urow uib_row_10 row-height-10" data-uib="layout/row" data-ver="0">
@@ -304,59 +326,122 @@
             </div>
 
         </div>
-        <div class="upage vertical-col left hidden" id="cadastro_ficha">
-            <div class="grid grid-pad urow uib_row_12 row-height-12" data-uib="layout/row" data-ver="0">
-                <div class="col uib_col_23 col-0_12-12" data-uib="layout/col" data-ver="0">
-                    <div class="widget-container content-area vertical-col center">
-                        <div class="tarea widget uib_w_42 d-margins" data-uib="media/text" data-ver="0" name="uib_w_42">
-                            <div class="widget-container left-receptacle"></div>
-                            <div class="widget-container right-receptacle"></div>
-                            <div class="text-container">
-                                <h2>Ficha Técnica</h2>
+        <div class="upage hidden" id="cadastro_ficha">
+            <div class="upage-outer">
+                <div class="uib-header header-bg container-group inner-element uib_w_51" data-uib="layout/header" data-ver="0">
+                    <h2></h2>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left">
+                    <div class="grid grid-pad urow uib_row_12 row-height-12" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_23 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col center">
+                                <div class="tarea widget uib_w_42 d-margins" data-uib="media/text" data-ver="0" name="uib_w_42">
+                                    <div class="widget-container left-receptacle"></div>
+                                    <div class="widget-container right-receptacle"></div>
+                                    <div class="text-container">
+                                        <h2>Ficha Técnica</h2>
+                                    </div>
+                                </div>
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                    <div class="grid grid-pad urow uib_row_13 row-height-13" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_24 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+                                <div class="well no_wrap  widget uib_w_41 d-margins" data-uib="twitter%20bootstrap/well" data-ver="1">
+                                    <div class="col uib_col_25 single-col" data-uib="layout/col" data-ver="0">
+                                        <div class="widget-container content-area vertical-col">
+                                            <div class="table-thing widget uib_w_43 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                <label class="narrow-control"></label>
+                                                <input class="wide-control form-control default" type="text" placeholder="Alergia">
+                                            </div>
+                                            <div class="table-thing widget uib_w_44 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                <label class="narrow-control"></label>
+                                                <input class="wide-control form-control default" type="text" placeholder="Peso">
+                                            </div>
+                                            <div class="table-thing widget uib_w_45 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                                <label class="narrow-control"></label>
+                                                <input class="wide-control form-control default" type="text" placeholder="Altura">
+                                            </div>
+                                            <div class="table-thing widget uib_w_46 d-margins" data-uib="twitter%20bootstrap/select" data-ver="1">
+                                                <label class="narrow-control"></label>
+                                                <select class="wide-control form-control default">
+                                                    <option>Doador</option>
+                                                    <option>Sim</option>
+                                                    <option>Não</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn widget uib_w_47 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1">Enviar</button>
+
+                                            <span class="uib_shim"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="uib_shim"></span>
                             </div>
                         </div>
                         <span class="uib_shim"></span>
                     </div>
                 </div>
-                <span class="uib_shim"></span>
             </div>
 
-            <div class="grid grid-pad urow uib_row_13 row-height-13" data-uib="layout/row" data-ver="0">
-                <div class="col uib_col_24 col-0_12-12" data-uib="layout/col" data-ver="0">
-                    <div class="widget-container content-area vertical-col">
-                        <div class="well no_wrap  widget uib_w_41 d-margins" data-uib="twitter%20bootstrap/well" data-ver="1">
-                            <div class="col uib_col_25 single-col" data-uib="layout/col" data-ver="0">
-                                <div class="widget-container content-area vertical-col">
-                                    <div class="table-thing widget uib_w_43 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="text" placeholder="Alergia">
-                                    </div>
-                                    <div class="table-thing widget uib_w_44 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="text" placeholder="Peso">
-                                    </div>
-                                    <div class="table-thing widget uib_w_45 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="text" placeholder="Altura">
-                                    </div>
-                                    <div class="table-thing widget uib_w_46 d-margins" data-uib="twitter%20bootstrap/select" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <select class="wide-control form-control default">
-                                            <option>Doador</option>
-                                            <option>Sim</option>
-                                            <option>Não</option>
-                                        </select>
-                                    </div>
-                                    <button class="btn widget uib_w_47 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1">Enviar</button>
+        </div>
+        <div class="upage hidden" id="menu">
+            <div class="upage-outer">
+                <div class="uib-header header-bg container-group inner-element uib_w_59" data-uib="layout/header" data-ver="0">
+                    <h2></h2>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left">
+                        <button class="btn widget uib_w_60 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1">Voltar</button>
+                    </div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left">
 
-                                    <span class="uib_shim"></span>
+                    <div class="grid grid-pad urow uib_row_16 row-height-16" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_37 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col center">
+                                <div class="tarea widget uib_w_65 d-margins" data-uib="media/text" data-ver="0" name="uib_w_65">
+                                    <div class="widget-container left-receptacle"></div>
+                                    <div class="widget-container right-receptacle"></div>
+                                    <div class="text-container">
+                                        <h1>Painel</h1>
+                                    </div>
                                 </div>
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                    <div class="grid grid-pad urow uib_row_15 row-height-15" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_35 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+                                <div class="well no_wrap  widget uib_w_61 d-margins" data-uib="twitter%20bootstrap/well" data-ver="1">
+                                    <div class="col uib_col_36 single-col" data-uib="layout/col" data-ver="0">
+                                        <div class="widget-container content-area vertical-col">
+                                            <button class="btn widget uib_w_53 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-user button-icon-left" data-position="left"></i>Cadatrar Pessoa</button>
+                                            <button class="btn widget uib_w_54 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-th-list button-icon-left" data-position="left"></i>Cadastrar Ficha Técnica</button>
+                                            <button class="btn widget uib_w_55 d-margins btn-default" data-uib="twitter%20bootstrap/button"
+                                            data-ver="1"><i class="glyphicon glyphicon-time button-icon-left" data-position="left"></i>Cadastrar Medicamento</button>
+                                            <button class="btn widget uib_w_57 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-user button-icon-left" data-position="left"></i>Mostrar Pessoa</button>
+                                            <button class="btn widget uib_w_62 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-th-list button-icon-left" data-position="left"></i>Mostrar Ficha Técnica</button>
+                                            <button class="btn widget uib_w_64 d-margins btn-default" data-uib="twitter%20bootstrap/button"
+                                            data-ver="1"><i class="glyphicon glyphicon-time button-icon-left" data-position="left"></i>Mostrar Medicamento</button>
+                                            <button class="btn widget uib_w_63 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-retweet button-icon-left" data-position="left"></i>Alterar senha</button><span class="uib_shim"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="uib_shim"></span>
                             </div>
                         </div>
                         <span class="uib_shim"></span>
                     </div>
                 </div>
-                <span class="uib_shim"></span>
             </div>
         </div>
     </body>
