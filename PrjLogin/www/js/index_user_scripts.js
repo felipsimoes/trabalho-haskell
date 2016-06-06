@@ -78,7 +78,7 @@
     $(document).on("click", "#menu_mostrar_ficha_medica", function(evt)
     {
          /*global activate_page */
-         activate_page("#cadastro_pessoa"); 
+         activate_page("#alterar_pessoa"); 
          return false;
     });
     
@@ -94,7 +94,7 @@
     $(document).on("click", "#menu_cadastrar_pessoa", function(evt)
     {
          /*global activate_page */
-         activate_page("#cadastro_pessoa"); 
+         activate_page("#alterar_pessoa"); 
          return false;
     });
     
@@ -102,7 +102,7 @@
     $(document).on("click", "#menu_cadastrar_ficha", function(evt)
     {
          /*global activate_page */
-         activate_page("#cadastro_ficha"); 
+         activate_page("#alterar_ficha"); 
          return false;
     });
     
