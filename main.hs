@@ -60,11 +60,13 @@ mkYesod "Pagina" [parseRoutes|
 /cadastro/pessoa PessoaR GET POST
 /cadastro/ficha FichaR GET POST
 /cadastro/medicamento MedicamentoR GET POST
+/cadastro/pessoamedicamento PessoaMedicamentoR POST
 
 /consulta/usuario/#UsuarioId UsuarioChecaR GET PUT DELETE
 /consulta/pessoa/#PessoaId PessoaChecaR GET PUT DELETE
 /consulta/ficha/#FichaId FichaChecaR GET PUT DELETE
 /consulta/medicamento/#MedicamentoId MedicamentoChecaR GET PUT DELETE
+/consulta/pessoamedicamento/#PessoaId PessoaMedicamentoChecaR GET
 
 |]
 
@@ -117,12 +119,14 @@ getPessoaR = do
 
 postPessoaR :: Handler ()
 postPessoaR = do
+    addHeader "Access-Control-Allow-Origin" "*"
     pessoa <- requireJsonBody :: Handler Pessoa
     runDB $ insert pessoa
     sendResponse (object [pack "resp" .= pack "Criado"])
 
 getPessoaChecaR :: PessoaId -> Handler Html
 getPessoaChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     pessoa <- runDB $ get404 pid
     defaultLayout [whamlet|
         <p><b> #{pessoaNome pessoa}  
@@ -165,12 +169,14 @@ getFichaR = do
 
 postFichaR :: Handler ()
 postFichaR = do
+    addHeader "Access-Control-Allow-Origin" "*"
     ficha <- requireJsonBody :: Handler Ficha
     runDB $ insert ficha
     sendResponse (object [pack "resp" .= pack "Criado"])
 
 getFichaChecaR :: FichaId -> Handler Html
 getFichaChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     ficha <- runDB $ get404 pid
     defaultLayout [whamlet|
         <p><b> #{fichaAlergia ficha}
@@ -186,6 +192,7 @@ deleteFichaChecaR fid = do
     
 putFichaChecaR :: FichaId -> Handler ()
 putFichaChecaR fid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     ficha <- requireJsonBody :: Handler Ficha
     runDB $ update fid [FichaAlergia =. fichaAlergia ficha,
                         FichaDoador =. fichaDoador ficha,
@@ -205,11 +212,12 @@ postMedicamentoR :: Handler ()
 postMedicamentoR = do
     addHeader "Access-Control-Allow-Origin" "*"
     medicamento <- requireJsonBody :: Handler Medicamento
-    runDB $ insert medicamento
-    sendResponse (object [pack "resp" .= pack "Criado"])
+    idMedicamento <- runDB $ insert medicamento
+    sendResponse (object [pack "resp" .= pack "Criado", pack "idMedicamento" .= show (fromSqlKey idMedicamento)])
 
 getMedicamentoChecaR :: MedicamentoId -> Handler Html
 getMedicamentoChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     medicamento <- runDB $ get404 pid
     defaultLayout [whamlet|
         <p><b> #{medicamentoNome medicamento}
@@ -223,10 +231,27 @@ deleteMedicamentoChecaR mid = do
     
 putMedicamentoChecaR :: MedicamentoId -> Handler ()
 putMedicamentoChecaR mid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     medicamento <- requireJsonBody :: Handler Medicamento
     runDB $ update mid [MedicamentoNome =. medicamentoNome medicamento,
                         MedicamentoDosagem =. medicamentoDosagem medicamento]
     sendResponse (object [pack "resp" .= pack "Alterado"])
+
+postPessoaMedicamentoR :: Handler ()
+postPessoaMedicamentoR = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    relacao <- requireJsonBody :: Handler PessoaMedicamentos
+    runDB $ insert relacao
+    sendResponse (object [pack "resp" .= pack "Criado"])
+
+getPessoaMedicamentoChecaR :: PessoaId -> Handler ()
+getPessoaMedicamentoChecaR pid = do
+    allMedicamento <- runDB $ (rawSql (pack $ "SELECT ?? FROM medicamento \ 
+     INNER JOIN pessoa_medicamentos \
+     ON medicamento.id=pessoa_medicamentos.mid \
+     WHERE pessoa_medicamentos.pid = " ++ (show $ fromSqlKey pid)) [])::Handler [(Entity Medicamento)]
+    sendResponse (object [pack "data" .= fmap toJSON allMedicamento]) 
+
 
 
 connStr = "dbname=d4htbg71jrvj1f host=ec2-107-20-174-127.compute-1.amazonaws.com user=kcepfkqlcfbgpx password=ypVq9Yx6t4Q1InDMvoT-yR7Idk port=5432"
