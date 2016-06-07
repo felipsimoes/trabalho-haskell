@@ -56,6 +56,8 @@ PessoaMedicamentos json
 
 mkYesod "Pagina" [parseRoutes|
 
+/login/usuario/#Text/#Text UsuarioLoginR GET
+
 /cadastro/usuario UsuarioR GET POST
 /cadastro/pessoa PessoaR GET POST
 /cadastro/ficha FichaR GET POST
@@ -76,6 +78,12 @@ instance YesodPersist Pagina where
         master <- getYesod
         let pool = connPool master
         runSqlPool f pool
+
+getUsuarioLoginR :: Text -> Text -> Handler Html
+getUsuarioLoginR em se = do
+    res <- runDB $ getBy404 (UniqueUsuario em)
+    sendResponse (object [  pack "senha" .= show (usuarioSenha (entityVal res)),
+                            pack "uid" .= fromSqlKey ((entityKey res)) ])
         
 getUsuarioR :: Handler ()
 getUsuarioR = do
@@ -92,11 +100,9 @@ postUsuarioR = do
 
 getUsuarioChecaR :: UsuarioId -> Handler Html
 getUsuarioChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     usuario <- runDB $ get404 pid
-    defaultLayout [whamlet|
-        <p><b> #{usuarioEmail usuario}  
-        <p><b> #{usuarioSenha usuario}
-    |]
+    sendResponse (object [pack "data" .= show usuario])
 
 
 putUsuarioChecaR :: UsuarioId -> Handler ()
@@ -128,18 +134,17 @@ getPessoaChecaR :: PessoaId -> Handler Html
 getPessoaChecaR pid = do
     addHeader "Access-Control-Allow-Origin" "*"
     pessoa <- runDB $ get404 pid
-    defaultLayout [whamlet|
-        <p><b> #{pessoaNome pessoa}  
-        <p><b> #{pessoaCpf pessoa}
-        <p><b> #{pessoaSexo pessoa}
-        <p><b> #{pessoaTelefone pessoa}
-        <p><b> #{pessoaDtnascimento pessoa}
-        <p><b> #{pessoaCep pessoa}
-        <p><b> #{pessoaEndereco pessoa}
-        <p><b> #{pessoaCidade pessoa}
-        <p><b> #{pessoaNomepai pessoa}
-        <p><b> #{pessoaNomemae pessoa}
-    |]
+    sendResponse (object [  pack "nome" .= pessoaNome pessoa, 
+                            pack "cpf" .= pessoaCpf pessoa,
+                            pack "sexo" .=  pessoaSexo pessoa ,
+                            pack "telefone" .=  pessoaTelefone pessoa ,
+                            pack "dtnascimento" .=  pessoaDtnascimento pessoa ,
+                            pack "cep" .= pessoaCep pessoa ,
+                            pack "endereco" .= pessoaEndereco pessoa ,
+                            pack "cidade" .= pessoaCidade pessoa ,
+                            pack "nomepai" .= pessoaNomepai pessoa ,
+                            pack "nomemae" .= pessoaNomemae pessoa ])
+    
 
 deletePessoaChecaR :: PessoaId -> Handler ()
 deletePessoaChecaR pid = do
@@ -178,12 +183,10 @@ getFichaChecaR :: FichaId -> Handler Html
 getFichaChecaR pid = do
     addHeader "Access-Control-Allow-Origin" "*"
     ficha <- runDB $ get404 pid
-    defaultLayout [whamlet|
-        <p><b> #{fichaAlergia ficha}
-        <p><b> #{fichaDoador ficha}
-        <p><b> #{fichaPeso ficha}
-        <p><b> #{fichaAltura ficha}
-    |]
+    sendResponse (object [  pack "alergia" .= fichaAlergia ficha,
+                            pack "doador" .= fichaDoador ficha,
+                            pack "peso" .= fichaPeso ficha,
+                            pack "altura" .= fichaAltura ficha ])
 
 deleteFichaChecaR :: FichaId -> Handler ()
 deleteFichaChecaR fid = do
@@ -199,7 +202,6 @@ putFichaChecaR fid = do
                         FichaPeso =. fichaPeso ficha,
                         FichaAltura =. fichaAltura ficha]
     sendResponse (object [pack "resp" .= pack "Alterado"])
-
 
 
 getMedicamentoR :: Handler ()
@@ -219,10 +221,8 @@ getMedicamentoChecaR :: MedicamentoId -> Handler Html
 getMedicamentoChecaR pid = do
     addHeader "Access-Control-Allow-Origin" "*"
     medicamento <- runDB $ get404 pid
-    defaultLayout [whamlet|
-        <p><b> #{medicamentoNome medicamento}
-        <p><b> #{medicamentoDosagem medicamento}    
-    |]
+    sendResponse (object [  pack "nome" .= medicamentoNome medicamento,
+                            pack "dosagem" .= medicamentoDosagem medicamento ])
     
 deleteMedicamentoChecaR :: MedicamentoId -> Handler ()
 deleteMedicamentoChecaR mid = do
