@@ -82,17 +82,6 @@
          return false;
     });
     
-        /* button  #menu_cadastrar_medicamento */
-    
-    
-        /* button  #menu_cadastrar_pessoa */
-    
-    
-        /* button  #menu_cadastrar_ficha */
-    
-    
-        /* button  Voltar */
-    
         
         /* button  #salvar_dados_pessoa */
     $(document).on("click", "#salvar_dados_pessoa", function(evt)
@@ -160,8 +149,6 @@
          return false;
     });
     
-        /* button  .uib_w_125 */
-    
     
         /* button  .uib_w_125 */
     $(document).on("click", ".uib_w_125", function(evt)
@@ -219,15 +206,26 @@
          return false;
     });
     
-        /* button  #menu_cadastrar_pessoa */
     
-    
-        /* button  #menu_cadastrar_pessoa */
-    $(document).on("click", "#menu_cadastrar_pessoa", function(evt)
+        /* button  #menu_alterar_pessoa */
+    $(document).on("click", "#menu_alterar_pessoa", function(evt)
     {
-         /*global activate_page */
-         activate_page("#mostrar_pessoa"); 
-         return false;
+         botaoGetPessoa().done(function(data){
+            activate_page("#mostrar_pessoa");
+            $("#nomeP").text(data.nome);
+            $("#cpfP").text(data.cpf);
+            $("#sexoP").text(data.sexo);
+            $("#teleP").text(data.telefone);
+            $("#dtnascP").text(data.dtnascimento);
+            $("#cepP").text(data.cep);
+            $("#enderecoP").text(data.endereco);
+            $("#cidadeP").text(data.cidade);
+            $("#npaiP").text(data.nomepai);
+            $("#nmaeP").text(data.nomemae);
+             
+        });
+        
+        return false;
     });
     
     }

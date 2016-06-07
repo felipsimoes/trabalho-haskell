@@ -151,4 +151,13 @@ function validarFormPostUsuario(){
     return false;
 }
 
-
+function botaoGetPessoa(){
+     return $.ajax( {
+        type: 'get',
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/pessoa/2',
+        success:function(data) {
+          console.log(data);
+        }
+    });
+};
