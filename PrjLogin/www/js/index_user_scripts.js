@@ -83,36 +83,16 @@
     });
     
         /* button  #menu_cadastrar_medicamento */
-    $(document).on("click", "#menu_cadastrar_medicamento", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#cadastro_medicamento"); 
-         return false;
-    });
+    
     
         /* button  #menu_cadastrar_pessoa */
-    $(document).on("click", "#menu_cadastrar_pessoa", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#alterar_pessoa"); 
-         return false;
-    });
+    
     
         /* button  #menu_cadastrar_ficha */
-    $(document).on("click", "#menu_cadastrar_ficha", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#alterar_ficha"); 
-         return false;
-    });
+    
     
         /* button  Voltar */
-    $(document).on("click", ".uib_w_18", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#menu"); 
-         return false;
-    });
+    
         
         /* button  #salvar_dados_pessoa */
     $(document).on("click", "#salvar_dados_pessoa", function(evt)
@@ -138,6 +118,116 @@
             } 
         });
         return false;
+    });
+    
+        /* button  .uib_w_123 */
+    $(document).on("click", ".uib_w_123", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  .uib_w_122 */
+    $(document).on("click", ".uib_w_122", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mostrar_medicamento"); 
+         return false;
+    });
+    
+        /* button  .uib_w_107 */
+    $(document).on("click", ".uib_w_107", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#alterar_medicamento"); 
+         return false;
+    });
+    
+        /* button  .uib_w_124 */
+    $(document).on("click", ".uib_w_124", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#lista_medicamentos"); 
+         return false;
+    });
+    
+        /* button  .uib_w_18 */
+    $(document).on("click", ".uib_w_18", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mainpage"); 
+         return false;
+    });
+    
+        /* button  .uib_w_125 */
+    
+    
+        /* button  .uib_w_125 */
+    $(document).on("click", ".uib_w_125", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mostrar_medicamento"); 
+         return false;
+    });
+    
+        /* button  .uib_w_126 */
+    $(document).on("click", ".uib_w_126", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  .uib_w_127 */
+    $(document).on("click", ".uib_w_127", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mostrar_ficha"); 
+         return false;
+    });
+    
+        /* button  .uib_w_129 */
+    $(document).on("click", ".uib_w_129", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  .uib_w_130 */
+    $(document).on("click", ".uib_w_130", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#menu"); 
+         return false;
+    });
+    
+        /* button  #menu_cadastrar_medicamento */
+    $(document).on("click", "#menu_cadastrar_medicamento", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#lista_medicamentos"); 
+         return false;
+    });
+    
+        /* button  #menu_cadastrar_ficha */
+    $(document).on("click", "#menu_cadastrar_ficha", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mostrar_ficha"); 
+         return false;
+    });
+    
+        /* button  #menu_cadastrar_pessoa */
+    
+    
+        /* button  #menu_cadastrar_pessoa */
+    $(document).on("click", "#menu_cadastrar_pessoa", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#mostrar_pessoa"); 
+         return false;
     });
     
     }
