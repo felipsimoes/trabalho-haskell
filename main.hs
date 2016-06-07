@@ -82,7 +82,7 @@ instance YesodPersist Pagina where
 getUsuarioLoginR :: Text -> Text -> Handler Html
 getUsuarioLoginR em se = do
     res <- runDB $ getBy404 (UniqueUsuario em)
-    sendResponse (object [  pack "senha" .= show (usuarioSenha (entityVal res)),
+    sendResponse (object [  pack "senha" .= usuarioSenha (entityVal res),
                             pack "uid" .= fromSqlKey ((entityKey res)) ])
         
 getUsuarioR :: Handler ()
@@ -102,7 +102,8 @@ getUsuarioChecaR :: UsuarioId -> Handler Html
 getUsuarioChecaR pid = do
     addHeader "Access-Control-Allow-Origin" "*"
     usuario <- runDB $ get404 pid
-    sendResponse (object [pack "data" .= show usuario])
+    sendResponse (object [  pack "email" .= usuarioEmail usuario,
+                            pack "senha" .= usuarioSenha usuario])
 
 
 putUsuarioChecaR :: UsuarioId -> Handler ()
@@ -153,8 +154,8 @@ deletePessoaChecaR pid = do
     
 putPessoaChecaR :: PessoaId -> Handler ()
 putPessoaChecaR pid = do
-    pessoa <- requireJsonBody :: Handler Pessoa 
-    runDB $ update pid [PessoaNome =. pessoaNome pessoa, 
+    pessoa <- requireJsonBody :: Handler Pessoa
+    runDB $ update pid [PessoaNome =. pessoaNome pessoa,
                         PessoaCpf =. pessoaCpf pessoa,
                         PessoaSexo =. pessoaSexo pessoa,
                         PessoaTelefone =. pessoaTelefone pessoa,
@@ -215,7 +216,8 @@ postMedicamentoR = do
     addHeader "Access-Control-Allow-Origin" "*"
     medicamento <- requireJsonBody :: Handler Medicamento
     idMedicamento <- runDB $ insert medicamento
-    sendResponse (object [pack "resp" .= pack "Criado", pack "idMedicamento" .= show (fromSqlKey idMedicamento)])
+    sendResponse (object [  pack "resp" .= pack "Criado",
+                            pack "idMedicamento" .= show (fromSqlKey idMedicamento)])
 
 getMedicamentoChecaR :: MedicamentoId -> Handler Html
 getMedicamentoChecaR pid = do
