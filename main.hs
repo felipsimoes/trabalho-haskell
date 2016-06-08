@@ -99,8 +99,9 @@ postUsuarioR :: Handler ()
 postUsuarioR = do
     addHeader "Access-Control-Allow-Origin" "*"
     usuario <- requireJsonBody :: Handler Usuario
-    runDB $ insert usuario
-    sendResponse (object [pack "resp" .= pack "Criado"])
+    idUsuario <- runDB $ insert usuario
+    sendResponse (object [  pack "resp" .= pack "Criado",
+                            pack "idUsuario" .= show (fromSqlKey idUsuario)])
 
 getUsuarioChecaR :: UsuarioId -> Handler Html
 getUsuarioChecaR pid = do
@@ -132,8 +133,9 @@ postPessoaR :: Handler ()
 postPessoaR = do
     addHeader "Access-Control-Allow-Origin" "*"
     pessoa <- requireJsonBody :: Handler Pessoa
-    runDB $ insert pessoa
-    sendResponse (object [pack "resp" .= pack "Criado"])
+    idPessoa <- runDB $ insert pessoa
+    sendResponse (object [  pack "resp" .= pack "Criado",
+                            pack "idPessoa" .= show (fromSqlKey idPessoa)])
 
 getPessoaChecaR :: PessoaId -> Handler Html
 getPessoaChecaR pid = do
