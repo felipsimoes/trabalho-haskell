@@ -70,6 +70,9 @@ mkYesod "Pagina" [parseRoutes|
 /consulta/medicamento/#MedicamentoId MedicamentoChecaR GET PUT DELETE
 /consulta/pessoamedicamento/#PessoaId PessoaMedicamentoChecaR GET
 
+/pessoa/usuario/#UsuarioId PessoaUsuarioR GET
+/ficha/pessoa/#PessoaId FichaPessoaR GET
+
 |]
 
 instance YesodPersist Pagina where
@@ -81,6 +84,7 @@ instance YesodPersist Pagina where
 
 getUsuarioLoginR :: Text -> Text -> Handler Html
 getUsuarioLoginR em se = do
+    addHeader "Access-Control-Allow-Origin" "*"
     res <- runDB $ getBy404 (UniqueUsuario em)
     sendResponse (object [  pack "senha" .= usuarioSenha (entityVal res),
                             pack "uid" .= fromSqlKey ((entityKey res)) ])
@@ -254,8 +258,18 @@ getPessoaMedicamentoChecaR pid = do
      WHERE pessoa_medicamentos.pid = " ++ (show $ fromSqlKey pid)) [])::Handler [(Entity Medicamento)]
     sendResponse (object [pack "data" .= fmap toJSON allMedicamento]) 
 
+getPessoaUsuarioR :: UsuarioId -> Handler ()
+getPessoaUsuarioR uid = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    res <- runDB $ selectFirst [PessoaUid ==. uid] []
+    sendResponse (object [  pack "data" .= res ])
 
-
+getFichaPessoaR :: PessoaId -> Handler ()
+getFichaPessoaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    res <- runDB $ selectFirst [FichaPid ==. pid] []
+    sendResponse (object [  pack "data" .= res ])
+   
 connStr = "dbname=d4htbg71jrvj1f host=ec2-107-20-174-127.compute-1.amazonaws.com user=kcepfkqlcfbgpx password=ypVq9Yx6t4Q1InDMvoT-yR7Idk port=5432"
 
 main :: IO ()
