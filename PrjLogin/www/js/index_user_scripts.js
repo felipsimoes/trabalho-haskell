@@ -118,12 +118,7 @@
     });
     
         /* button  .uib_w_122 */
-    $(document).on("click", ".uib_w_122", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#mostrar_medicamento"); 
-         return false;
-    });
+    
     
         /* button  .uib_w_107 */
     $(document).on("click", ".uib_w_107", function(evt)
@@ -191,12 +186,7 @@
     });
     
         /* button  #menu_cadastrar_medicamento */
-    $(document).on("click", "#menu_cadastrar_medicamento", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#lista_medicamentos"); 
-         return false;
-    });
+    
     
         /* button  #menu_cadastrar_ficha */
     $(document).on("click", "#menu_cadastrar_ficha", function(evt)
@@ -226,6 +216,44 @@
         });
         
         return false;
+    });
+    
+        /* button  #menu_alterar_ficha */
+    $(document).on("click", "#menu_alterar_ficha", function(evt)
+    {
+        botaoGetFicha().done(function(data){
+            activate_page("#mostrar_ficha");
+            $("#alergiaF").text(data.alergia);
+            $("#doadorF").text(data.doador);
+            $("#pesoF").text(data.peso);
+            $("#alturaF").text(data.altura);
+        });
+        
+        return false;
+    });
+    
+          
+        /* button  .uib_w_122 */
+    $(document).on("click", ".uib_w_122", function(evt)
+    {
+        botaoGetMedicamento().done(function(data){
+            activate_page("#mostrar_medicamento");
+            $("#nomeM").text(data.nome);
+            $("#dosageM").text(data.dosagem);
+        }); 
+        
+         return false;
+    });
+    
+        /* button  #menu_alterar_medicamento */
+    $(document).on("click", "#menu_alterar_medicamento", function(evt)
+    {
+        botaoGetListaMedicamento().done(function(data){
+            activate_page("#lista_medicamentos");
+            $("#nomeLM").text(data.nome);
+            $("#dosageLM").text(data.dosagem);
+        });  
+         return false;
     });
     
     }

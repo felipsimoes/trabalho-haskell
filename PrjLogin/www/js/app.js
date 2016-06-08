@@ -161,3 +161,36 @@ function botaoGetPessoa(){
         }
     });
 };
+
+function botaoGetFicha(){
+     return $.ajax( {
+        type: 'get',
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/ficha/2',
+        success:function(data) {
+          console.log(data);
+        }
+    });
+};
+
+function botaoGetListaMedicamento(){
+     return $.ajax( {
+        type: 'get',
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/2',
+        success:function(data) {
+          console.log(data);
+        }
+    });
+};
+
+function botaoGetMedicamento(){
+     return $.ajax( {
+        type: 'get',
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/2',
+        success:function(data) {
+          console.log(data);
+        }
+    });
+};
