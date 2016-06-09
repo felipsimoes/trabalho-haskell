@@ -24,6 +24,7 @@
 var dados;
 var sessao_usuario_id = null; //null quando entrar no app
 var sessao_pessoa_id = null; //decidir melhor forma de capturar esse id
+var sessao_ficha_id = null;
 
 function getFormData($form){
     var unindexed_array = $form.serializeArray();
@@ -96,6 +97,32 @@ function botaoPutPessoa(){
             console.log(data);
         }
     });
+}
+
+function botaoPutFicha(){
+    var $form = $("form[name='formPostFicha']");
+    dados = getFormData($form);
+    dados.pid = sessao_pessoa_id;
+    dados.peso = parseFloat(dados.peso.replace(",","."));
+    dados.altura = parseFloat(dados.altura.replace(",","."));
+    console.log(dados);
+    
+    return $.ajax( {
+        type: 'put',
+        async: false,
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/ficha/'+sessao_ficha_id,
+        success:function(data){
+            data.status = "sucesso";
+            console.log(data);
+        },
+        error:function(data){
+            data.status = "erro";
+            console.log(data);
+        }
+    });
+    
 }
 
 function botaoPostFicha(pid){

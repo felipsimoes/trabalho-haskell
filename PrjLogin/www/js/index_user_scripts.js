@@ -38,17 +38,7 @@
         
     
         /* button  #salvar_dados_ficha */
-    $(document).on("click", "#salvar_dados_ficha", function(evt)
-    {
-        botaoPostFicha().done(function(data){
-            if(data.resp === "Criado"){
-               activate_page("#menu");
-            }else{
-              alert("Erro");
-            } 
-        });
-        return false;
-    });
+    
     
         /* button  .uib_w_123 */
     $(document).on("click", ".uib_w_123", function(evt)
@@ -140,6 +130,7 @@
     {
         botaoGetFicha().done(function(data){
             console.log(JSON.stringify(data.data));
+            sessao_ficha_id = data.data.id;
             activate_page("#mostrar_ficha");
             $("#alergiaF").text(data.data.alergia);
             $("#doadorF").text(data.data.doador);
@@ -319,6 +310,37 @@
         sessao_pessoa_id = null;
         sessao_usuario_id = null;
         activate_page("#mainpage");
+         return false;
+    });
+    
+        /* button  #alterar-ficha */
+    $(document).on("click", "#alterar-ficha", function(evt)
+    {
+        botaoGetFicha().done(function(data){
+            console.log(JSON.stringify(data.data));
+            activate_page("#alterar_ficha");
+            $("#alergiaAltF").val(data.data.alergia);
+            $("#doadorAltF").val(data.data.doador);
+            $("#pesoAltF").val(data.data.peso);
+            $("#alturaAltF").val(data.data.altura);
+        });
+         return false;
+    });
+    
+        /* button  #salvar_dados_ficha */
+    $(document).on("click", "#salvar_dados_ficha", function(evt)
+    {
+        botaoPutFicha().done(function(data){
+             if(data.resp == "Alterado"){
+                botaoGetFicha().done(function(data){                  
+                    activate_page("#mostrar_ficha");
+                    $("#alergiaF").text(data.data.alergia);
+                    $("#doadorF").text(data.data.doador);
+                    $("#pesoF").text(data.data.peso);
+                    $("#alturaF").text(data.data.altura);
+                });
+             }
+         }); 
          return false;
     });
     
