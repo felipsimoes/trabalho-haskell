@@ -19,12 +19,7 @@
     });
     
         /* button  Voltar */
-    $(document).on("click", ".uib_w_60", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#mainpage"); 
-         return false;
-    });
+    
     
         /* button  #enviar_medicamento */
     $(document).on("click", "#enviar_medicamento", function(evt)
@@ -40,36 +35,7 @@
          
     });
     
-    
-        /* button  Esqueceu a senha? */
-    $(document).on("click", ".uib_w_5", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#menu"); 
-         return false;
-    });
-    
-        /* button  #menu_mostrar_ficha_medica */
-    $(document).on("click", "#menu_mostrar_ficha_medica", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#alterar_pessoa"); 
-         return false;
-    });
-    
         
-        /* button  #salvar_dados_pessoa */
-    $(document).on("click", "#salvar_dados_pessoa", function(evt)
-    {
-        botaoPostPessoa().done(function(data){
-            if(data.resp === "Criado"){
-               activate_page("#menu");
-            }else{
-              alert("Erro");
-            } 
-        });
-        return false;
-    });
     
         /* button  #salvar_dados_ficha */
     $(document).on("click", "#salvar_dados_ficha", function(evt)
@@ -168,27 +134,6 @@
     });
     
     
-        /* button  #menu_alterar_pessoa */
-    $(document).on("click", "#menu_alterar_pessoa", function(evt)
-    {
-         botaoGetPessoa().done(function(data){
-            activate_page("#mostrar_pessoa");
-            data = data.data;
-            $("#nomeP").text(data.nome);
-            $("#cpfP").text(data.cpf);
-            $("#sexoP").text(data.sexo);
-            $("#teleP").text(data.telefone);
-            $("#dtnascP").text(data.dtnascimento);
-            $("#cepP").text(data.cep);
-            $("#enderecoP").text(data.endereco);
-            $("#cidadeP").text(data.cidade);
-            $("#npaiP").text(data.nomepai);
-            $("#nmaeP").text(data.nomemae);
-             
-        });
-        
-        return false;
-    });
     
         /* button  #menu_alterar_ficha */
     $(document).on("click", "#menu_alterar_ficha", function(evt)
@@ -271,13 +216,7 @@
     });
     
     
-        /* button  #botao-registrar */
-    $(document).on("click", "#botao-registrar", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#cadastro_usuario"); 
-         return false;
-    });
+
     
         /* button  #btn-entrar */
     $(document).on("click", "#btn-entrar", function(evt)
@@ -299,7 +238,89 @@
     });
     
  
+    
+        /* button  #salvar_dados_pessoa */
+    $(document).on("click", "#salvar_dados_pessoa", function(evt)
+    {
+         botaoPutPessoa().done(function(data){
+             if(data.resp == "Alterado"){
+                botaoGetPessoa().done(function(data){
+                    activate_page("#mostrar_pessoa");
+                    data = data.data;
+                    $("#nomeP").text(data.nome);
+                    $("#cpfP").text(data.cpf);
+                    $("#sexoP").text(data.sexo);
+                    $("#teleP").text(data.telefone);
+                    $("#dtnascP").text(data.dtnascimento);
+                    $("#cepP").text(data.cep);
+                    $("#enderecoP").text(data.endereco);
+                    $("#cidadeP").text(data.cidade);
+                    $("#npaiP").text(data.nomepai);
+                    $("#nmaeP").text(data.nomemae);
+                });
+             }
+         });
+         return false;
+    });
+    
+  
+        /* button  #botao_registrar */
+    $(document).on("click", "#botao_registrar", function(evt)
+    {
+        activate_page("#cadastro_usuario"); 
+         return false;
+    });
+    
+        /* button  #menu_alterar_pessoa */
+    $(document).on("click", "#menu_alterar_pessoa", function(evt)
+    {
+        botaoGetPessoa().done(function(data){
+                    activate_page("#mostrar_pessoa");
+                    data = data.data;
+                    $("#nomeP").text(data.nome);
+                    $("#cpfP").text(data.cpf);
+                    $("#sexoP").text(data.sexo);
+                    $("#teleP").text(data.telefone);
+                    $("#dtnascP").text(data.dtnascimento);
+                    $("#cepP").text(data.cep);
+                    $("#enderecoP").text(data.endereco);
+                    $("#cidadeP").text(data.cidade);
+                    $("#npaiP").text(data.nomepai);
+                    $("#nmaeP").text(data.nomemae);
+         });
+         return false;
+    });
+    
+        /* button  #btn-alterar-pessoa */
+    $(document).on("click", "#btn-alterar-pessoa", function(evt)
+    {
+       botaoGetPessoa().done(function(data){
+                    activate_page("#alterar_pessoa");
+                    console.log("aquidata");
+                    data = data.data;
+                    $("#nomeAltP").val(data.nome);
+                    $("#cpfAltP").val(data.cpf);
+                    $("#sexoAltP").val(data.sexo);
+                    $("#telefoneAltP").val(data.telefone);
+                    $("#dtNascimentoAltP").val(data.dtnascimento);
+                    $("#cepAltP").val(data.cep);
+                    $("#enderecoAltP").val(data.endereco);
+                    $("#cidadeAltP").val(data.cidade);
+                    $("#nomepaiAltP").val(data.nomepai);
+                    $("#nomemaeAltP").val(data.nomemae);
+         }); 
+         return false;
+    });
+    
 
+        /* button  .uib_w_60 */
+    $(document).on("click", ".uib_w_60", function(evt)
+    {
+        sessao_pessoa_id = null;
+        sessao_usuario_id = null;
+        activate_page("#mainpage");
+         return false;
+    });
     
     }
  document.addEventListener("app.Ready", register_event_handlers, false);

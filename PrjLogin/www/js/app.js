@@ -75,6 +75,29 @@ function botaoPostPessoa(uid){
         }
     });
 }
+function botaoPutPessoa(){
+    var $form = $("form[name='formPostPessoa']");
+    dados = getFormData($form);
+    console.log(dados);
+    dados.uid = sessao_usuario_id;
+
+    return $.ajax( {
+        type: 'put',
+        async: false,
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/pessoa/'+sessao_pessoa_id,
+        success:function(data){
+            data.status = "sucesso";
+            console.log(data);
+        },
+        error:function(data){
+            data.status = "erro";
+            console.log(data);
+        }
+    });
+}
+
 function botaoPostFicha(pid){
     var $form = $("form[name='formPostFicha']");
     dados = getFormData($form);
