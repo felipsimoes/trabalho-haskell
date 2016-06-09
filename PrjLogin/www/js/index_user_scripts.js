@@ -7,24 +7,7 @@
  */
  function register_event_handlers()
  {
-        
-        /* button  Registrar */
-    $(document).on("click", ".uib_w_14", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#cadastro_usuario"); 
-    });
-
-        /* button  Cadastrar */
-    $(document).on("click", ".uib_w_16", function(evt)
-    {   
-        if(validarFormPostUsuario()==true){
-            botaoPostUsuario();    
-        }
-        return false;
-                
-    });
-    
+           
         /* button  Limpar */
     $(document).on("click", ".uib_w_19", function(evt)
     {
@@ -33,14 +16,6 @@
         $("#formPostUsuario input[name=senhaNovamente]").val(''); 
         $("#mensagemPostUsuario").css("display","none");
         return false;
-    });
-    
-        /* button  Entrar */
-    $(document).on("click", ".uib_w_4", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#menu"); 
-         return false;
     });
     
         /* button  Voltar */
@@ -117,8 +92,6 @@
          return false;
     });
     
-        /* button  .uib_w_122 */
-    
     
         /* button  .uib_w_107 */
     $(document).on("click", ".uib_w_107", function(evt)
@@ -185,8 +158,6 @@
          return false;
     });
     
-        /* button  #menu_cadastrar_medicamento */
-    
     
         /* button  #menu_cadastrar_ficha */
     $(document).on("click", "#menu_cadastrar_ficha", function(evt)
@@ -202,6 +173,7 @@
     {
          botaoGetPessoa().done(function(data){
             activate_page("#mostrar_pessoa");
+            data = data.data;
             $("#nomeP").text(data.nome);
             $("#cpfP").text(data.cpf);
             $("#sexoP").text(data.sexo);
@@ -222,11 +194,12 @@
     $(document).on("click", "#menu_alterar_ficha", function(evt)
     {
         botaoGetFicha().done(function(data){
+            console.log(JSON.stringify(data.data));
             activate_page("#mostrar_ficha");
-            $("#alergiaF").text(data.alergia);
-            $("#doadorF").text(data.doador);
-            $("#pesoF").text(data.peso);
-            $("#alturaF").text(data.altura);
+            $("#alergiaF").text(data.data.alergia);
+            $("#doadorF").text(data.data.doador);
+            $("#pesoF").text(data.data.peso);
+            $("#alturaF").text(data.data.altura);
         });
         
         return false;
@@ -255,6 +228,78 @@
         });  
          return false;
     });
+        
+    
+        /* button  #btn-cadastrar */
+    $(document).on("click", "#btn-cadastrar", function(evt)
+    {
+        if(validarFormPostUsuario()==true){
+            var idUsuario, idPessoa;
+            botaoPostUsuario().done(function(data){
+                if(data.status == "sucesso"){
+                    idUsuario = data.idUsuario;
+                    $("#mensagemPostUsuario").addClass("alert-success");
+                    $("#mensagemPostUsuario").text("Usuário cadastrado com sucesso!");
+                    $("#mensagemPostUsuario").css("display","block");
+                    if(idUsuario != null){
+                        botaoPostPessoa(idUsuario).done(function(data){
+                            if(data.status == "sucesso"){
+                                idPessoa = data.idPessoa;
+                                if(idPessoa != null){
+                                    botaoPostFicha(idPessoa).done(function(data){
+                                       if(data.status == "sucesso"){
+                                           console.log("ficha inserida com sucesso");
+                                       }else{
+                                           console.log("erro ao inserir ficha");
+                                       }
+                                    });
+                               }
+                            }else{
+                                console.log("erro ao inserir pessoa");
+                            }
+                        });   
+                    }
+                }else{
+                    $("#mensagemPostUsuario").addClass("alert-danger");
+                    $("#mensagemPostUsuario").text("Ocorreu um erro durante o cadastro!");
+                    $("#mensagemPostUsuario").css("display","block");
+                }
+            });
+                    
+        }
+        return false;
+    });
+    
+    
+        /* button  #botao-registrar */
+    $(document).on("click", "#botao-registrar", function(evt)
+    {
+         /*global activate_page */
+         activate_page("#cadastro_usuario"); 
+         return false;
+    });
+    
+        /* button  #btn-entrar */
+    $(document).on("click", "#btn-entrar", function(evt)
+    {
+        botaoPostLoginUsuario().done(function(data){
+            if(data.senha == data.senhaDigitada){
+                activate_page("#menu");
+                sessao_usuario_id = data.uid;
+                botaoGetPessoa().done(function(data){
+                    console.log(data.data);
+                    sessao_pessoa_id = data.data.id;
+                });
+            }
+            else{
+                console.log("Deu ruim."); 
+            }
+         });
+         return false;
+    });
+    
+ 
+
     
     }
  document.addEventListener("app.Ready", register_event_handlers, false);
