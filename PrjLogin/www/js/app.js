@@ -25,6 +25,7 @@ var dados;
 var sessao_usuario_id = null; //null quando entrar no app
 var sessao_pessoa_id = null; //decidir melhor forma de capturar esse id
 var sessao_ficha_id = null;
+var sessao_lista_medicamentos = null;
 
 function getFormData($form){
     var unindexed_array = $form.serializeArray();
@@ -240,24 +241,28 @@ function botaoGetFicha(){
     });
 };
 
-function botaoGetListaMedicamento(){
+function botaoGetListaMedicamentos(){
      return $.ajax( {
         type: 'get',
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/2',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/pessoamedicamento/'+sessao_pessoa_id,
         success:function(data) {
           console.log(data);
         }
     });
 };
 
-function botaoGetMedicamento(){
+function botaoGetMedicamento(numero){
      return $.ajax( {
         type: 'get',
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/2',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/'+numero,
         success:function(data) {
           console.log(data);
         }
     });
 };
+
+function insereMedicamentoLista(nome,dosa,id) { 
+    return $( "<a class='list-group-item allow-badge widget botao_medicamento' data-uib='twitter%20bootstrap/list_item' href='"+ id +"'><h4 class='list-group-item-heading'>"+ nome + "</h4><p class='list-group-item-text'>" + dosa + "</p></a>" ); 
+}

@@ -33,12 +33,7 @@
          });
          return false;
          
-    });
-    
-        
-    
-        /* button  #salvar_dados_ficha */
-    
+    });    
     
         /* button  .uib_w_123 */
     $(document).on("click", ".uib_w_123", function(evt)
@@ -155,15 +150,7 @@
     });
     
         /* button  #menu_alterar_medicamento */
-    $(document).on("click", "#menu_alterar_medicamento", function(evt)
-    {
-        botaoGetListaMedicamento().done(function(data){
-            activate_page("#lista_medicamentos");
-            $("#nomeLM").text(data.nome);
-            $("#dosageLM").text(data.dosagem);
-        });  
-         return false;
-    });
+    
         
     
         /* button  #btn-cadastrar */
@@ -327,20 +314,59 @@
          return false;
     });
     
+    
+        /* button  #salvar_dados_medicamento */
+    $(document).on("click", "#salvar_dados_medicamento", function(evt)
+    {
+        
+        
+        
+         return false;
+    });
+    
         /* button  #salvar_dados_ficha */
     $(document).on("click", "#salvar_dados_ficha", function(evt)
     {
         botaoPutFicha().done(function(data){
-             if(data.resp == "Alterado"){
-                botaoGetFicha().done(function(data){                  
-                    activate_page("#mostrar_ficha");
-                    $("#alergiaF").text(data.data.alergia);
-                    $("#doadorF").text(data.data.doador);
-                    $("#pesoF").text(data.data.peso);
-                    $("#alturaF").text(data.data.altura);
-                });
-             }
-         }); 
+           if(data.resp == "Alterado"){
+                 botaoGetFicha().done(function(data){                  
+                     activate_page("#mostrar_ficha");
+                     $("#alergiaF").text(data.data.alergia);
+                     $("#doadorF").text(data.data.doador);
+                     $("#pesoF").text(data.data.peso);
+                     $("#alturaF").text(data.data.altura);
+                 });
+              } 
+        });
+         return false;
+    });
+    
+        /* button  #menu_alterar_medicamento */
+    $(document).on("click", "#menu_alterar_medicamento", function(evt)
+    {
+        botaoGetListaMedicamentos().done(function(data){
+            sessao_lista_medicamentos = data.data;
+            activate_page("#lista_medicamentos");
+            var i, $m;
+            for(i=0; i < sessao_lista_medicamentos.length; i++){
+                var medicamento = sessao_lista_medicamentos[i];
+                $m = insereMedicamentoLista(medicamento.nome, medicamento.dosagem, medicamento.id);
+                $(".modelo_medicamento").after($m);
+            }
+            $(".modelo_medicamento").remove();
+        });
+         return false;
+    });
+     
+    $(document).on("click", ".botao_medicamento", function(evt)
+    {
+        botaoGetMedicamento($(this).attr("href")).done(function(data){
+            activate_page("#mostrar_medicamento");
+            $("#nomeM").text(data.nome);
+            $("#dosageM").text(data.dosagem);
+        });
+        
+        
          return false;
     });
     
