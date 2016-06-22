@@ -72,7 +72,6 @@ mkYesod "Pagina" [parseRoutes|
 
 /pessoa/usuario/#UsuarioId PessoaUsuarioR GET
 /ficha/pessoa/#PessoaId FichaPessoaR GET
-
 |]
 
 instance YesodPersist Pagina where
@@ -113,12 +112,14 @@ getUsuarioChecaR pid = do
 
 putUsuarioChecaR :: UsuarioId -> Handler ()
 putUsuarioChecaR uid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     usuario <- requireJsonBody :: Handler Usuario 
     runDB $ update uid [UsuarioSenha =. usuarioSenha usuario]
     sendResponse (object [pack "resp" .= pack "Alterado"])
 
 deleteUsuarioChecaR :: UsuarioId -> Handler ()
 deleteUsuarioChecaR uid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     runDB $ delete uid
     sendResponse (object [pack "resp" .= pack "Excluido"])
 
@@ -155,11 +156,13 @@ getPessoaChecaR pid = do
 
 deletePessoaChecaR :: PessoaId -> Handler ()
 deletePessoaChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     runDB $ delete pid
     sendResponse (object [pack "resp" .= pack "Excluido"])
     
 putPessoaChecaR :: PessoaId -> Handler ()
 putPessoaChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     pessoa <- requireJsonBody :: Handler Pessoa
     runDB $ update pid [PessoaNome =. pessoaNome pessoa,
                         PessoaCpf =. pessoaCpf pessoa,
@@ -197,6 +200,7 @@ getFichaChecaR pid = do
 
 deleteFichaChecaR :: FichaId -> Handler ()
 deleteFichaChecaR fid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     runDB $ delete fid
     sendResponse (object [pack "resp" .= pack "Excluido"])
     
@@ -234,6 +238,7 @@ getMedicamentoChecaR pid = do
     
 deleteMedicamentoChecaR :: MedicamentoId -> Handler ()
 deleteMedicamentoChecaR mid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     runDB $ delete mid
     sendResponse (object [pack "resp" .= pack "Excluido"])
     
@@ -254,6 +259,7 @@ postPessoaMedicamentoR = do
 
 getPessoaMedicamentoChecaR :: PessoaId -> Handler ()
 getPessoaMedicamentoChecaR pid = do
+    addHeader "Access-Control-Allow-Origin" "*"
     allMedicamento <- runDB $ (rawSql (pack $ "SELECT ?? FROM medicamento \ 
      INNER JOIN pessoa_medicamentos \
      ON medicamento.id=pessoa_medicamentos.mid \
