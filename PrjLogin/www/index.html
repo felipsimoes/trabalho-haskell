@@ -111,17 +111,19 @@
                                             <h3>Acesse sua conta!</h3>
                                         </div>
                                     </div>
-                                    <div class="table-thing widget uib_w_1 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="text" placeholder="Email ou Usuario">
-                                    </div>
-                                    <div class="table-thing widget uib_w_3 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control"></label>
-                                        <input class="wide-control form-control default" type="email" placeholder="Senha">
-                                    </div>
-                                    <button class="btn widget uib_w_4 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1">Entrar</button>
-                                    <button class="btn widget uib_w_14 d-margins btn-info" data-uib="twitter%20bootstrap/button" data-ver="1">Registrar</button>
-                                    <span class="uib_shim"></span>
+                                    <form name="formPostLoginUsuario" class="form-inline" id="formPostLoginUsuario" action="#">
+                                        <div class="table-thing widget uib_w_1 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                            <label for="email" class="narrow-control"></label>
+                                            <input class="wide-control form-control default" type="text" name="email" placeholder="Email ou Usuario">
+                                        </div>
+                                        <div class="table-thing widget uib_w_3 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                            <label for="senha" class="narrow-control"></label>
+                                            <input class="wide-control form-control default" type="password" name="senha" placeholder="Senha">
+                                        </div>
+                                        <button class="btn widget uib_w_4 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn-entrar">Entrar</button>
+                                        <button class="btn widget uib_w_14 d-margins btn-info" data-uib="twitter%20bootstrap/button" data-ver="1" id="botao_registrar">Registrar</button>
+                                        <span class="uib_shim"></span>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -290,15 +292,15 @@
                                             <form name="formPostPessoa" class="form-inline" id="formPostPessoa" action="#">
                                                 <div class="table-thing widget uib_w_28 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="nome" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" name="nome" placeholder="Nome">
+                                                    <input id="nomeAltP" class="wide-control form-control default" type="text" name="nome" placeholder="Nome">
                                                 </div>
                                                 <div class="table-thing widget uib_w_29 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="cpf" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" name="cpf" placeholder="CPF">
+                                                    <input id="cpfAltP" class="wide-control form-control default" type="text" name="cpf" placeholder="CPF">
                                                 </div>
                                                 <div class="table-thing widget uib_w_33 d-margins" data-uib="twitter%20bootstrap/select" data-ver="1">
                                                     <label for="sexo" class="narrow-control"></label>
-                                                    <select name="sexo" class="wide-control form-control default">
+                                                    <select id="sexoAltP" name="sexo" class="wide-control form-control default">
                                                         <option>Sexo</option>
                                                         <option>Masculino</option>
                                                         <option>Feminino</option>
@@ -306,31 +308,31 @@
                                                 </div>
                                                 <div class="table-thing widget uib_w_30 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="dtnascimento" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="date" name="dtnascimento" placeholder="Data de Nascimento">
+                                                    <input id="dtNascimentoAltP" class="wide-control form-control default" type="date" name="dtnascimento" placeholder="Data de Nascimento">
                                                 </div>
                                                 <div class="table-thing widget uib_w_32 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="telefone" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" name="telefone" placeholder="Telefone">
+                                                    <input id="telefoneAltP" class="wide-control form-control default" type="text" name="telefone" placeholder="Telefone">
                                                 </div>
                                                 <div class="table-thing widget uib_w_31 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="cep" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" name="cep" placeholder="CEP">
+                                                    <input id="cepAltP" class="wide-control form-control default" type="text" name="cep" placeholder="CEP">
                                                 </div>
                                                 <div class="table-thing widget uib_w_34 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="endereco" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" name="endereco" placeholder="Endereço">
+                                                    <input id="enderecoAltP" class="wide-control form-control default" type="text" name="endereco" placeholder="Endereço">
                                                 </div>
                                                 <div class="table-thing widget uib_w_36 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="cidade" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" name="cidade" placeholder="Cidade">
+                                                    <input id="cidadeAltP" class="wide-control form-control default" type="text" name="cidade" placeholder="Cidade">
                                                 </div>
                                                 <div class="table-thing widget uib_w_66 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="nomepai" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" placeholder="Nome do pai" name="nomepai">
+                                                    <input id="nomepaiAltP" class="wide-control form-control default" type="text" placeholder="Nome do pai" name="nomepai">
                                                 </div>
                                                 <div class="table-thing widget uib_w_67 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label for="nomemae" class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" placeholder="Nome da mãe" name="nomemae">
+                                                    <input id="nomemaeAltP" class="wide-control form-control default" type="text" placeholder="Nome da mãe" name="nomemae">
                                                 </div>
                                                 <button class="btn widget uib_w_27 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="salvar_dados_pessoa">Salvar Dados Pessoa</button>
                                                 <span class="uib_shim"></span>
@@ -383,19 +385,19 @@
                                             <form name="formPostFicha" class="form-inline" id="formPostFicha" action="#">
                                                 <div class="table-thing widget uib_w_43 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" placeholder="Alergia" name="alergia">
+                                                    <input id="alergiaAltF" class="wide-control form-control default" type="text" placeholder="Alergia" name="alergia">
                                                 </div>
                                                 <div class="table-thing widget uib_w_44 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" placeholder="Peso" name="peso">
+                                                    <input id="pesoAltF" class="wide-control form-control default" type="text" placeholder="Peso" name="peso">
                                                 </div>
                                                 <div class="table-thing widget uib_w_45 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
                                                     <label class="narrow-control"></label>
-                                                    <input class="wide-control form-control default" type="text" placeholder="Altura" name="altura">
+                                                    <input id="alturaAltF" class="wide-control form-control default" type="text" placeholder="Altura" name="altura">
                                                 </div>
                                                 <div class="table-thing widget uib_w_46 d-margins" data-uib="twitter%20bootstrap/select" data-ver="1">
                                                     <label for="doador" class="narrow-control"></label>
-                                                    <select class="wide-control form-control default" name="doador">
+                                                    <select id="doadorAltF" class="wide-control form-control default" name="doador">
                                                         <option>Doador</option>
                                                         <option>Sim</option>
                                                         <option>Não</option>
@@ -642,7 +644,7 @@
                                                     <p id="nmaeP"></p>
                                                 </div>
                                             </div>
-                                            <button class="btn widget uib_w_94 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-refresh button-icon-left" data-position="left"></i>Alterar Dados</button><span class="uib_shim"></span>
+                                            <button class="btn widget uib_w_94 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn-alterar-pessoa"><i class="glyphicon glyphicon-refresh button-icon-left" data-position="left"></i>Alterar Dados</button><span class="uib_shim"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -743,7 +745,7 @@
                                                     <p id="alturaF"></p>
                                                 </div>
                                             </div>
-                                            <button class="btn widget uib_w_105 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-refresh button-icon-left" data-position="left"></i>Alterar Dados</button>
+                                            <button class="btn widget uib_w_105 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="alterar-ficha"><i class="glyphicon glyphicon-refresh button-icon-left" data-position="left"></i>Alterar Dados</button>
                                             <span class="uib_shim"></span>
                                         </div>
                                     </div>
@@ -865,15 +867,15 @@
                                     <div class="col uib_col_49 single-col" data-uib="layout/col" data-ver="0">
                                         <div class="widget-container content-area vertical-col">
                                             <div class="list-group widget uib_w_117 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
-                                                <a class="list-group-item allow-badge widget uib_w_118" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                                                <a class="list-group-item allow-badge widget modelo_medicamento" data-uib="twitter%20bootstrap/list_item" data-ver="1" href="google.com">
                                                     <h4 id="nomeLM" class="list-group-item-heading">Medicamento1</h4>
 
-                                                    <p id="dosageLM" class="list-group-item-text">Dosagem1</p>
+                                                    <p id="dosageLM" class="list-group-item-text">Dosagem</p>
                                                 </a>
 
                                             </div>
-                                            <button class="btn widget uib_w_131 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-arrow-down button-icon-left" data-position="left"></i>Adicionar Medicamento</button>
-                                            <button class="btn widget uib_w_122 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-ok button-icon-left" data-position="left"></i>Selecionar</button>
+                                            <button class="btn widget uib_w_131 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-plus-sign button-icon-left" data-position="left"></i>Adicionar Medicamento</button>
+
                                             <span class="uib_shim"></span>
                                         </div>
                                     </div>

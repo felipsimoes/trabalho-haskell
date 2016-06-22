@@ -22,8 +22,10 @@
 // }
 
 var dados;
-var sessao_usuario_id = 3; //null quando entrar no app
-var sessao_pessoa_id = 2; //decidir melhor forma de capturar esse id
+var sessao_usuario_id = null; //null quando entrar no app
+var sessao_pessoa_id = null; //decidir melhor forma de capturar esse id
+var sessao_ficha_id = null;
+var sessao_lista_medicamentos = null;
 
 function getFormData($form){
     var unindexed_array = $form.serializeArray();
@@ -35,32 +37,29 @@ function getFormData($form){
 
     return indexed_array;
 }
-
 function botaoPostUsuario(){
     var $form = $("form[name='formPostUsuario']");
     dados = getFormData($form);
 
-    $.ajax( {
+    return $.ajax( {
         type: 'post',
         data: JSON.stringify(dados),
         dataType: 'json',
         url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/usuario',
         success:function(data) {
-            $("#mensagemPostUsuario").addClass("alert-success");
-            $("#mensagemPostUsuario").text("Usuário cadastrado com sucesso!");
-            $("#mensagemPostUsuario").css("display","block");
+            data.status = "sucesso";
+            console.log(data);
         },
         error:function(data) {
-            $("#mensagemPostUsuario").addClass("alert-danger");
-            $("#mensagemPostUsuario").text("Ocorreu um erro durante o cadastro!");
-            $("#mensagemPostUsuario").css("display","block");
+            data.status = "erro";
+            console.log(data);
         }
     });
 }
-function botaoPostPessoa(){
+function botaoPostPessoa(uid){
     var $form = $("form[name='formPostPessoa']");
     dados = getFormData($form);
-    dados["uid"] = sessao_usuario_id; //usuario felipe
+    dados["uid"] = parseFloat(uid); 
 
     return $.ajax( {
         type: 'post',
@@ -69,21 +68,71 @@ function botaoPostPessoa(){
         dataType: 'json',
         url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/pessoa',
         success:function(data){
+            data.status = "sucesso";
             console.log(data);
         },
         error:function(data){
+            data.status = "erro";
             console.log(data);
         }
     });
 }
-function botaoPostFicha(){
+function botaoPutPessoa(){
+    var $form = $("form[name='formPostPessoa']");
+    dados = getFormData($form);
+    console.log(dados);
+    dados.uid = sessao_usuario_id;
+
+    return $.ajax( {
+        type: 'put',
+        async: false,
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/pessoa/'+sessao_pessoa_id,
+        success:function(data){
+            data.status = "sucesso";
+            console.log(data);
+        },
+        error:function(data){
+            data.status = "erro";
+            console.log(data);
+        }
+    });
+}
+
+function botaoPutFicha(){
     var $form = $("form[name='formPostFicha']");
     dados = getFormData($form);
-    //dados["uid"] = sessao_usuario_id; //usuario felipe
+    dados.pid = sessao_pessoa_id;
+    dados.peso = parseFloat(dados.peso.replace(",","."));
+    dados.altura = parseFloat(dados.altura.replace(",","."));
+    console.log(dados);
+    
+    return $.ajax( {
+        type: 'put',
+        async: false,
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/ficha/'+sessao_ficha_id,
+        success:function(data){
+            data.status = "sucesso";
+            console.log(data);
+        },
+        error:function(data){
+            data.status = "erro";
+            console.log(data);
+        }
+    });
+    
+}
+
+function botaoPostFicha(pid){
+    var $form = $("form[name='formPostFicha']");
+    dados = getFormData($form);
     dados.peso = parseFloat(dados.peso.replace(",","."));
     dados.altura = parseFloat(dados.altura.replace(",","."));
     
-    dados["pid"] = sessao_pessoa_id;
+    dados["pid"] = parseFloat(pid);
     
     return $.ajax( {
         type: 'post',
@@ -92,13 +141,16 @@ function botaoPostFicha(){
         dataType: 'json',
         url:'https://yesod-trabalho-felipsimoes.c9users.io/cadastro/ficha',
         success:function(data){
+            data.status = "sucesso";
             console.log(data);
         },
         error:function(data){
+            data.status = "erro";
             console.log(data);
         }
     });
 }
+
 
 function botaoPostMedicamento(){
     var $form = $("form[name='formPostMedicamento']");
@@ -155,42 +207,62 @@ function botaoGetPessoa(){
      return $.ajax( {
         type: 'get',
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/pessoa/2',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/pessoa/usuario/'+sessao_usuario_id,
         success:function(data) {
-          console.log(data);
+          console.log(data.data);
         }
     });
 };
+
+function botaoPostLoginUsuario(){
+    var $form = $("form[name='formPostLoginUsuario']");
+    dados = getFormData($form);
+
+    return $.ajax( {
+        type: 'get',
+        data: JSON.stringify(dados),
+        dataType: 'json',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/login/usuario/'+dados.email+'/'+dados.senha,
+        success:function(data) {
+            data.senhaDigitada = dados.senha;
+            console.log(data);
+        }
+    });
+}
 
 function botaoGetFicha(){
      return $.ajax( {
         type: 'get',
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/ficha/2',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/ficha/pessoa/'+sessao_pessoa_id,
         success:function(data) {
           console.log(data);
         }
     });
 };
 
-function botaoGetListaMedicamento(){
+function botaoGetListaMedicamentos(){
      return $.ajax( {
         type: 'get',
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/2',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/pessoamedicamento/'+sessao_pessoa_id,
         success:function(data) {
           console.log(data);
         }
     });
 };
 
-function botaoGetMedicamento(){
+function botaoGetMedicamento(numero){
      return $.ajax( {
         type: 'get',
         dataType: 'json',
-        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/2',
+        url:'https://yesod-trabalho-felipsimoes.c9users.io/consulta/medicamento/'+numero,
         success:function(data) {
           console.log(data);
         }
     });
 };
+
+function insereMedicamentoLista(nome,dosa,id) { 
+    return $( "<a class='list-group-item allow-badge widget botao_medicamento' data-uib='twitter%20bootstrap/list_item' href='"+ id +"'><h4 class='list-group-item-heading'>"+ nome + "</h4><p class='list-group-item-text'>" + dosa + "</p></a>" ); 
+}
